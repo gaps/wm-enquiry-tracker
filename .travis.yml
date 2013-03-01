@@ -5,6 +5,5 @@ php:
 
 before_script: 
   - cd trunk
-  - php composer.phar install
 
 script: "phpunit"
