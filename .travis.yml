@@ -6,4 +6,4 @@ php:
 before_script: 
   - cd trunk
 
-phpunit
+script: "phpunit"
