@@ -58,7 +58,7 @@ class User extends Eloquent implements UserInterface, RemindableInterface
 
     public function branches()
     {
-        return $this->belongsToMany('Branch')->order_by('name');
+        return $this->belongsToMany('Branch')->orderBy('name');
     }
 
     public function roles()

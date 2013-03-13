@@ -8,8 +8,11 @@ $baseDir = dirname($vendorDir);
 return array(
     'BaseController' => $baseDir . '/app/controllers/BaseController.php',
     'Branch' => $baseDir . '/app/models/Branch.php',
+    'Constants' => $baseDir . '/app/libraries/Constants.php',
     'DatabaseSeeder' => $baseDir . '/app/database/seeds/DatabaseSeeder.php',
     'Enquiry' => $baseDir . '/app/models/Enquiry.php',
+    'EnquiryController' => $baseDir . '/app/controllers/EnquiryController.php',
+    'EnquiryRepository' => $baseDir . '/app/libraries/repositories/EnquiryRepository.php',
     'EnquiryStatus' => $baseDir . '/app/models/EnquiryStatus.php',
     'HomeController' => $baseDir . '/app/controllers/HomeController.php',
     'Init' => $baseDir . '/app/database/migrations/2013_02_22_142539_init.php',
@@ -60,4 +63,6 @@ return array(
     'SessionHandlerInterface' => $baseDir . '/vendor/symfony/http-foundation/Symfony/Component/HttpFoundation/Resources/stubs/SessionHandlerInterface.php',
     'TestCase' => $baseDir . '/app/tests/TestCase.php',
     'User' => $baseDir . '/app/models/User.php',
+    'UserController' => $baseDir . '/app/controllers/UserController.php',
+    'Util' => $baseDir . '/app/libraries/Util.php',
 );

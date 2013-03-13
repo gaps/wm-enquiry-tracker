@@ -12,6 +12,7 @@ class Enquiry extends Eloquent
     public static $factory = array(
         'name' => 'string',
         'program' => 'string',
+        'type' => 'string',
         'enquiryDate' => '1 Jan 2013',
         'user_id' => 'factory|User',
         'branch_id' => 'factory|Branch'
@@ -20,8 +21,8 @@ class Enquiry extends Eloquent
     public function enquiryStatus()
     {
         //default order for demo status
-        return $this->hasMany('EnquiryStatus')->order_by('created_at', 'desc');
-        ;
+//        return $this->hasMany('EnquiryStatus');
+        return $this->hasMany('EnquiryStatus')->orderBy('created_at', 'desc');
     }
 
     public function branch()

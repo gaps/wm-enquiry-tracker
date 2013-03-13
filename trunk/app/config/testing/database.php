@@ -26,7 +26,7 @@ return array(
 	|
 	*/
 
-	'default' => 'sqlite',
+	'default' => 'pgsql',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -67,8 +67,8 @@ return array(
 		'pgsql' => array(
 			'driver'   => 'pgsql',
 			'host'     => 'localhost',
-			'database' => 'wm_enquiry',
-			'username' => 'naveen',
+			'database' => 'wm_enquiry_test',
+			'username' => 'postgres',
 			'password' => 'asdf',
 			'charset'  => 'utf8',
 			'prefix'   => '',

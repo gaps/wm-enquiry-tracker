@@ -41,8 +41,7 @@ class Init extends Migration {
             $table->string('email', 100)->nullable();
             $table->date('enquiryDate');
             $table->string('program');
-            $table->string('counsellor')->nullable();
-            $table->string('faculty')->nullable();
+            $table->string('type');
             $table->integer('user_id')->unsigned();
             $table->integer('branch_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users');
@@ -68,7 +67,6 @@ class Init extends Migration {
             $table->integer('role_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users');
             $table->foreign('role_id')->references('id')->on('roles');
-            // $table->timestamps();
         });
 
         Schema::create('branch_user', function ($table) {
@@ -77,7 +75,6 @@ class Init extends Migration {
             $table->integer('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users');
             $table->foreign('branch_id')->references('id')->on('branches');
-            // $table->timestamps();
         });
 	}
 

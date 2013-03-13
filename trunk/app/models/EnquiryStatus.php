@@ -13,7 +13,7 @@ class EnquiryStatus extends Eloquent
     const NOT_INTERESTED = "not_interested";
     const FOLLOW_UP = "follow_up";
 
-    public static $table = 'enquiryStatus';
+    protected $table = 'enquiryStatus';
 
     public static $factory = array(
         'status' => EnquiryStatus::CREATED,
