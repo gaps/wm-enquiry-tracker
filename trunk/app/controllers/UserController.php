@@ -13,7 +13,7 @@ class UserController extends BaseController
      * The layout that should be used for responses.
      */
     protected $layout = 'layouts.common';
-
+//
 
     public function getLogin()
     {
@@ -21,15 +21,9 @@ class UserController extends BaseController
         return View::make('user.login');
     }
 
-    public function postTest(){
-        return Response::json(array('name'=>'keshav'));
-    }
-
     public function postLogin()
     {
-
         $data = (object)Input::json();
-
         if (empty($data))
             return Response::make(Lang::get('errors.bad'), Constants::BAD_REQUEST_CODE);
 
@@ -51,5 +45,11 @@ class UserController extends BaseController
             ));
     }
 
+
+    public function getLogout()
+    {
+        Auth::logout();
+        return Redirect::to('users/login');
+    }
 
 }

@@ -12,3 +12,10 @@
 */
 Route::controller('enquiry', 'EnquiryController');
 Route::controller('users', 'UserController');
+Route::controller('', 'HomeController');
+
+Route::filter('auth', function () {
+    if (Auth::guest())
+        return Redirect::to('users/login');
+
+});

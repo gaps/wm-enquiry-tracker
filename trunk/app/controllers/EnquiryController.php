@@ -16,10 +16,17 @@ class EnquiryController extends BaseController
         $this->enquiryRepo = new EnquiryRepository();
     }
 
-    public function postGetIndex()
+    /**
+     * Get view for viewing list of demo for authenticated user
+     * @return Laravel\View
+     */
+    public function getList()
     {
-        return "hello";
+
+
+        return View::make('enquiry.list');
     }
+
 
 
     public function postAddEnquiry()
@@ -138,7 +145,6 @@ class EnquiryController extends BaseController
     }
 
 
-
     public function postMarkEnquiryNew()
     {
         $data = (object)Input::json();
@@ -148,7 +154,7 @@ class EnquiryController extends BaseController
 
 
         $enquiryId = isset($data->enquiryId) ? $data->enquiryId : null;
-               $enquiryStatus = $this->enquiryRepo->markEnquiryNew($enquiryId);
+        $enquiryStatus = $this->enquiryRepo->markEnquiryNew($enquiryId);
 
         if ($enquiryStatus == false)
             return Response::make(Lang::get('error.database'), Constants::DATABASE_ERROR_CODE);
@@ -167,7 +173,7 @@ class EnquiryController extends BaseController
 
         $enquiryId = isset($data->enquiryId) ? $data->enquiryId : null;
         $remarks = isset($data->remarks) ? $data->remarks : null;
-        $enquiryStatus = $this->enquiryRepo->markEnquiryNotInterested($enquiryId,$remarks);
+        $enquiryStatus = $this->enquiryRepo->markEnquiryNotInterested($enquiryId, $remarks);
 
         if ($enquiryStatus == false)
             return Response::make(Lang::get('error.database'), Constants::DATABASE_ERROR_CODE);

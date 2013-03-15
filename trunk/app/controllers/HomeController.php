@@ -15,9 +15,17 @@ class HomeController extends BaseController {
 	|
 	*/
 
-	public function showWelcome()
+    public function __construct()
+    {
+//        parent::__construct();
+//        $this->filter('before', 'auth')->except(array('index'));
+        $this->beforeFilter('auth');
+    }
+
+	public function getIndex()
 	{
-		return View::make('hello');
+
+        return View::make('hello');
 	}
 
 }

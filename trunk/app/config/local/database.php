@@ -67,7 +67,7 @@ return array(
 			'driver'   => 'pgsql',
 			'host'     => 'localhost',
 			'database' => 'wm_enquiry',
-			'username' => 'naveen',
+			'username' => 'postgres',
 			'password' => 'asdf',
 			'charset'  => 'utf8',
 			'prefix'   => '',
