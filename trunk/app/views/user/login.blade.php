@@ -1,5 +1,3 @@
-@extends('layouts.common')
-@section('content')
 <div ng-controller="User_Login">
     <div>
         <div ng-show="showError">
@@ -16,6 +14,3 @@
         </form>
     </div>
 </div>
-@stop
-
-

@@ -1,9 +1,12 @@
+'use strict';
+
 //Define routes for the application
-angular.module('app',[]).
+angular.module('app', []).
     config(['$routeProvider', function ($routeProvider) {
         $routeProvider.
-            when('/users/login', {templateUrl: '/users/login'}).
-            when('/users/logout', {templateUrl: '/users/logout'})
+            when('/user/login', {templateUrl: '/user/login', controller: 'User_Login'}).
+            when('/enquiry/', {templateUrl: '/enquiry/list', controller: 'Enquiry_List'});
 
-        when('/enquiry/', {templateUrl: '/enquiry/list', controller: Enquiry_List_Controller});
+
+        $routeProvider.otherwise({redirectTo: '/'});
     }]);

@@ -3,7 +3,7 @@
 class BaseController extends Controller
 {
 
-    protected $layout = "layouts.common";
+    protected $layout = null;
 
     /**
      * Setup the layout used by the controller.
