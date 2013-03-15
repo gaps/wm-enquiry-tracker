@@ -30,4 +30,17 @@ class Util
         return $toDate;
     }
 
+    public static function getStatus()
+    {
+        return array("New",
+            "Enrolled",
+            "Enrolled Later",
+            "Not Interested");
+    }
+
+    public static function  getTypes()
+    {
+        return array('Walk-in', 'Telephonic', 'Other');
+    }
+
 }

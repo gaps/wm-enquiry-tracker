@@ -19,6 +19,13 @@ class UserControllerTest extends TestCase
     }
 
 
+    public function testUserBranches(){
+        $branch=$this->getBranch();
+        $user=$this->getUser();
+
+        $this->assertEquals(true, true);
+    }
+
     public function testUsertLogin()
     {
         $user = new User();

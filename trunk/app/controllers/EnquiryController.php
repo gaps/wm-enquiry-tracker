@@ -22,12 +22,50 @@ class EnquiryController extends BaseController
      */
     public function getList()
     {
-
-
+//        $fromDate = Util::getFromDate(new DateTime('now'));
+//        $toDate = Util::getToDate(new DateTime('now'));
+//
+//        $branchIds = array();
+//        $branches = Auth::user()->branches()->get();
+//        foreach ($branches as $branch) {
+//            $branchIds[] = $branch->id;
+//        }
+//
+//        $enquiries = $this->enquiryRepo->getEnquiries($branchIds,
+//            array(EnquiryStatus::FOLLOW_UP, EnquiryStatus::CREATED,
+//                EnquiryStatus::ENROLLED, EnquiryStatus::NOT_INTERESTED),
+//            Util::getTypes(), $fromDate, $toDate);
         return View::make('enquiry.list');
+
+//        return View::make('enquiry.list')->with('fromDate', $fromDate)->
+//            with('toDate', $toDate)->
+//            with('enquiries', $enquiries)->
+//            with('branches', $branches);
+    }
+
+    public function getBranches()
+    {
+        $branchesArray = array();
+        $branches = Auth::user()->branches()->get();
+        foreach ($branches as $branch) {
+            $branchesArray[] = $branch->name;
+        }
+
+        return Response::json($branchesArray);
+
     }
 
 
+    public function getTypes()
+    {
+        return Response::json(Util::getTypes());
+    }
+
+    public function getStatuses()
+    {
+
+        return Response::json(Util::getStatus());
+    }
 
     public function postAddEnquiry()
     {
