@@ -17,7 +17,7 @@ class Branch extends Eloquent
         return $this->belongsToMany('User');
     }
 
-    public function demos()
+    public function enquiries()
     {
         return $this->hasMany('Enquiry', 'branch_id');
     }

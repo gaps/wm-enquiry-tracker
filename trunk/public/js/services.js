@@ -98,8 +98,8 @@ module.factory('EnquiryService', ["$http", "$q", function ($http, $q) {
                     else
                         deferred.resolve([]);
                 }).error(function ($data) {
-                    log('error', $e);
-                    deferred.reject($e);
+                    console.log('error', $data);
+                    deferred.reject($data);
                 });
 
             return deferred.promise;

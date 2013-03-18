@@ -28,11 +28,12 @@ angular.module('app')
                 return {"name": val, "selected": true};
             });
         });
+//        setTimeout(30000);
 
+        setTimeout(function() {
+        $scope.enquiries = $enquiryService.getEnquiries($scope.fromDate, $scope.toDate, $scope.branches, $scope.statuses, $scope.types);
+        }, 30000);
 
-//        $timeout(function() {
-            $scope.enquiries = $enquiryService.getEnquiries($scope.fromDate, $scope.toDate, $scope.branches, $scope.statuses, $scope.types);
-//        }, 2000);
 
 
     }

@@ -1,0 +1,31 @@
+body {
+    padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
+}
+
+body, input, button, select, textarea, .btn, label, .btn-group > .btn, .btn-group > .dropdown-menu, .btn-group > .popover {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 12px !important;
+}
+
+@media (max-width: 979px) {
+    body {
+        padding-top: 0px;
+    }
+}
+
+#ajax-loader {
+    text-align: center;
+    padding: 10px;
+    background: #feb215;
+    font-size: 20px;
+    font-weight: bold;
+    color: #9b6901;
+    position: absolute;
+    top: 40px;
+    width: 100%;
+}
+
+.pop-over {
+    text-decoration: underline;
+    cursor: pointer;
+}
