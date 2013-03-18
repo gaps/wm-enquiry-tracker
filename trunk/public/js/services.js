@@ -91,15 +91,43 @@ module.factory('EnquiryService', ["$http", "$q", function ($http, $q) {
                     status: status,
                     types: types
                 }
-            ).success(function ($data) {
+            ).success(function (data) {
                     if (Array.isArray(data)) {
                         deferred.resolve(data);
                     }
                     else
                         deferred.resolve([]);
-                }).error(function ($data) {
-                    console.log('error', $data);
-                    deferred.reject($data);
+                }).error(function (data) {
+                    console.log('error', data);
+                    deferred.reject(data);
+                });
+
+            return deferred.promise;
+        },
+
+        addEnquiries: function (enquiry) {
+            var deferred = $q.defer();          //defer for data
+
+            $http.post(
+                '/enquiry/add-enquiry',
+                {
+                    name: enquiry.name,
+                    program: enquiry.program,
+                    email: enquiry.email,
+                    mobile:enquiry.mobile,
+                    type: enquiry.type,
+                    branch_id: enquiry.branchId
+
+                }
+            ).success(function (data) {
+                    if (data) {
+                        deferred.resolve(data);
+                    }
+                    else
+                        deferred.resolve([]);
+                }).error(function (data) {
+                    console.log('error', data);
+                    deferred.reject(data);
                 });
 
             return deferred.promise;
@@ -107,5 +135,41 @@ module.factory('EnquiryService', ["$http", "$q", function ($http, $q) {
 
     }
 
+
+
+
+}]);
+
+module.factory('FollowupService', ["$http", "$q", function ($http, $q) {
+    return {
+
+        getFollowups: function (fromDate, toDate, branchIds, types,pageNumber,pageCount) {
+            var deferred = $q.defer();          //defer for data
+
+            $http.post(
+                '/enquiry/get-followups',
+                {
+                    fromDate: fromDate,
+                    toDate: toDate,
+                    branchIds: branchIds,
+                    types: types,
+                    pageNumber: pageNumber,
+                    pageCount: pageCount
+                }
+            ).success(function (data) {
+                    if (Array.isArray(data)) {
+                        deferred.resolve(data);
+                    }
+                    else
+                        deferred.resolve([]);
+                }).error(function (data) {
+                    console.log('error', data);
+                    deferred.reject(data);
+                });
+
+            return deferred.promise;
+        }
+
+    }
 
 }]);

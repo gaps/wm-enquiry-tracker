@@ -14,8 +14,8 @@ class Util
     {
         if (empty($fromDate))
             return $fromDate;
-        $dateValue = date('Y', $fromDate->getTimestamp()) . "-" . date('m', $fromDate->getTimestamp()) . "-" . date('d', $fromDate->getTimestamp()) . " 00:00:00";
-        $fromDate = new DateTime($dateValue);
+        $dateid = date('Y', $fromDate->getTimestamp()) . "-" . date('m', $fromDate->getTimestamp()) . "-" . date('d', $fromDate->getTimestamp()) . " 00:00:00";
+        $fromDate = new DateTime($dateid);
         return $fromDate;
     }
 
@@ -24,18 +24,18 @@ class Util
 
         if (empty($toDate))
             return $toDate;
-        $dateValue = date('Y', $toDate->getTimestamp()) . "-" . date('m', $toDate->getTimestamp()) . "-" . date('d', $toDate->getTimestamp()) . " 00:00:00";
-        $toDate = new DateTime($dateValue);
+        $dateid = date('Y', $toDate->getTimestamp()) . "-" . date('m', $toDate->getTimestamp()) . "-" . date('d', $toDate->getTimestamp()) . " 00:00:00";
+        $toDate = new DateTime($dateid);
         $toDate->add(new DateInterval('P1D'));
         return $toDate;
     }
 
     public static function getStatus()
     {
-        return array("New",
-            "Enrolled",
-            "Enrolled Later",
-            "Not Interested");
+        return array(array("name" => "New", 'id' => EnquiryStatus::CREATED), array(
+            "name" => "Enrolled", 'id' => EnquiryStatus::ENROLLED)
+        , array("name" => "Enrolled Later", 'id' => EnquiryStatus::FOLLOW_UP)
+        , array("name" => "Not Interested", 'id' => EnquiryStatus::NOT_INTERESTED));
     }
 
     public static function  getTypes()

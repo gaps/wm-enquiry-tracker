@@ -14,6 +14,7 @@ class EnquiryController extends BaseController
     public function __construct()
     {
         $this->enquiryRepo = new EnquiryRepository();
+        $this->beforeFilter('auth');
     }
 
     /**
@@ -22,25 +23,7 @@ class EnquiryController extends BaseController
      */
     public function getList()
     {
-//        $fromDate = Util::getFromDate(new DateTime('now'));
-//        $toDate = Util::getToDate(new DateTime('now'));
-//
-//        $branchIds = array();
-//        $branches = Auth::user()->branches()->get();
-//        foreach ($branches as $branch) {
-//            $branchIds[] = $branch->id;
-//        }
-//
-//        $enquiries = $this->enquiryRepo->getEnquiries($branchIds,
-//            array(EnquiryStatus::FOLLOW_UP, EnquiryStatus::CREATED,
-//                EnquiryStatus::ENROLLED, EnquiryStatus::NOT_INTERESTED),
-//            Util::getTypes(), $fromDate, $toDate);
         return View::make('enquiry.list');
-
-//        return View::make('enquiry.list')->with('fromDate', $fromDate)->
-//            with('toDate', $toDate)->
-//            with('enquiries', $enquiries)->
-//            with('branches', $branches);
     }
 
     public function getBranches()
@@ -48,13 +31,17 @@ class EnquiryController extends BaseController
         $branchesArray = array();
         $branches = Auth::user()->branches()->get();
         foreach ($branches as $branch) {
-            $branchesArray[] = $branch->name;
+            $branchesArray[] =array( 'name'=>$branch->name,'id'=>$branch->id);
         }
 
         return Response::json($branchesArray);
 
     }
 
+    public function getFollowups()
+    {
+        return View::make('followups/list');
+    }
 
     public function getTypes()
     {
@@ -99,7 +86,7 @@ class EnquiryController extends BaseController
 
     public function postGetEnquiries()
     {
-        $data = (object)Input::json();
+          $data = (object)Input::json();
 
         if (empty($data)) {
             return Response::make(Lang::get('errors.bad'), Constants::BAD_REQUEST_CODE);
@@ -126,7 +113,7 @@ class EnquiryController extends BaseController
 
     }
 
-    public function postGetFollowUps()
+    public function postGetFollowups()
     {
         $data = (object)Input::json();
 
@@ -136,12 +123,13 @@ class EnquiryController extends BaseController
 
         $fromDate = !isset($data->fromDate) || empty($data->fromDate) ? new DateTime('now') : Util::getFromDate(new DateTime($data->fromDate));
         $toDate = !isset($data->toDate) || empty($data->toDate) ? new DateTime('now') : Util::getToDate(new DateTime($data->toDate));
-
         $branchIds = isset($data->branchIds) ? $data->branchIds : array();
         $types = isset($data->types) ? $data->types : array();
-
+        $pageCount = isset($data->pageCount) ? $data->pageCount : Constants::PAGECOUNT;
+        $pageNumber = isset($data->pageNumber) ? $data->pageNumber : 1;
+        $skip = $pageCount * ($pageNumber - 1);
         try {
-            $enquiries = $this->enquiryRepo->getFollowUps($fromDate, $toDate, $types, $branchIds);
+            $enquiries = $this->enquiryRepo->getFollowUps($fromDate, $toDate, $types, $branchIds,$skip,$pageCount);
         } catch (PDOException $e) {
             Log::exception($e);
             return Response::make(Lang::get('error.database'), Constants::DATABASE_ERROR_CODE);

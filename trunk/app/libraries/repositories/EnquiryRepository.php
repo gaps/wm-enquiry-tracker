@@ -29,7 +29,9 @@ class EnquiryRepository
         DB::connection()->transaction(function () use ($status, $enquiryObject) {
             try {
                 $enquiryObject->save();
-                $enquiryObject->enquiryStatus()->insert($status);
+                $status->enquiry_id = $enquiryObject->id;
+                $status->save();
+
             } catch (Exception $e) {
                 Log::error("$e");
             }
@@ -38,7 +40,7 @@ class EnquiryRepository
     }
 
 
-    public function getEnquiries($branchIds, $status, $types, $fromDate = null, $toDate = null, $skip=0, $perPage=Constants::PAGECOUNT)
+    public function getEnquiries($branchIds, $status, $types, $fromDate = null, $toDate = null, $skip = 0, $perPage = Constants::PAGECOUNT)
     {
         if (empty($status) || empty($types) || empty($branchIds) || $fromDate == null || $toDate == null)
             return array();
@@ -91,7 +93,7 @@ class EnquiryRepository
         }
     }
 
-    public function getFollowUps(DateTime $fromDate, DateTime $toDate, $types, $branchIds, $skip=0, $perPage=Constants::PAGECOUNT)
+    public function getFollowUps(DateTime $fromDate, DateTime $toDate, $types, $branchIds, $skip = 0, $perPage = Constants::PAGECOUNT)
     {
 
         if (empty($types) || empty($branchIds) || $fromDate == null || $toDate == null)

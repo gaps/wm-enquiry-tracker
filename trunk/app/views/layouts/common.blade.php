@@ -8,7 +8,9 @@
 
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
     <link href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.0/css/bootstrap-combined.no-icons.min.css" media="all" type="text/css" rel="stylesheet">
+    <link href="<% URL::asset('css/datepicker.css'); %>" media="all" type="text/css" rel="stylesheet">
     <link href="<% URL::asset('css/application.css'); %>" media="all" type="text/css" rel="stylesheet">
+
 
     <!--[if IE 7]>
     <link href="http://smslite.localhost.com/css/font-awesome-ie7.min.css" media="all" type="text/css" rel="stylesheet">
@@ -23,6 +25,8 @@
     <script src="<% URL::asset('js/services.js'); %>"></script>
     <script src="<% URL::asset('js/controller.js'); %>"></script>
     <script src="<% URL::asset('js/date-format.js'); %>"></script>
+    <script src="<% URL::asset('js/bootstrap-datepicker.js'); %>"></script>
+    <script src="<% URL::asset('js/moment.min.js'); %>"></script>
 </head>
 <body>
 

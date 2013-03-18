@@ -29,3 +29,38 @@ body, input, button, select, textarea, .btn, label, .btn-group > .btn, .btn-grou
     text-decoration: underline;
     cursor: pointer;
 }
+.color-box-enrolled{
+    width:13px;
+    height:13px;
+    margin-top:3px;
+    border:1px solid #ccc;
+    float:right;
+    background-color:#dff0d8;
+}
+
+.color-box-follow_up{
+    width:13px;
+    height:13px;
+    margin-top:3px;
+    border:1px solid #ccc;
+    float:right;
+    background-color:#d9edf7;
+}
+
+.color-box-not_interested{
+    width:13px;
+    height:13px;
+    margin-top:3px;
+    border:1px solid #ccc;
+    float:right;
+    background-color:#f2dede;
+}
+
+.color-box-created{
+    width:13px;
+    height:13px;
+    margin-top:3px;
+    border:1px solid #ccc;
+    float:right;
+    background-color:#fff;
+}
