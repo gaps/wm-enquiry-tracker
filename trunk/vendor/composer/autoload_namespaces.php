@@ -6,7 +6,6 @@ $vendorDir = dirname(__DIR__);
 $baseDir = dirname($vendorDir);
 
 return array(
-    'Zizaco\\FactoryMuff' => $vendorDir . '/zizaco/factory-muff/src/',
     'Symfony\\Component\\Translation\\' => $vendorDir . '/symfony/translation/',
     'Symfony\\Component\\Routing\\' => $vendorDir . '/symfony/routing/',
     'Symfony\\Component\\Process\\' => $vendorDir . '/symfony/process/',

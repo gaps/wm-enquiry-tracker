@@ -66,9 +66,9 @@
                 <th>Edit</th>
             </tr>
             </thead>
-            <tbody ng-show="enquiries.length>0">
+            <tbody>
 
-            <tr ng-repeat="enquiry in enquiries" ng-class="getStatusCss(enquiry)">
+            <tr ng-show="enquiries.length>0" ng-repeat="enquiry in enquiries" ng-class="getStatusCss(enquiry)">
                 <td>{{ getFormattedDate(enquiry.enquiryDate) }}</td>
                 <td>{{ enquiry.name }}</td>
                 <td>{{ enquiry.mobile }}</td>
@@ -94,9 +94,7 @@
                 </td>
             </tr>
 
-            </tbody>
-            <tbody ng-show="enquiries.length==0">
-            <tr>
+            <tr ng-show="enquiries.length==0">
                 <td colspan="9" style="text-align: center">
                     <br/>
                     <strong>
@@ -107,13 +105,14 @@
                 </td>
             </tr>
             </tbody>
-
         </table>
         <div>
             <button class="btn" ng-disabled="previousPage == 0" ng-click="updatePrevious()"><i
-                    class="icon-caret-left icon-large"></i> << </button>
+                    class="icon-caret-left icon-large"></i> <<
+            </button>
             <button class="btn" ng-disabled="followUps.length ==0" ng-click="updateNext()"><i
-                    class="icon-caret-right icon-large"></i> >>  </button>
+                    class="icon-caret-right icon-large"></i> >>
+            </button>
         </div>
     </div>
 
