@@ -60,7 +60,6 @@ class EnquiryController extends BaseController
     }
 
 
-
     public function postAddEnquiry()
     {
         $data = (object)Input::json();
@@ -107,13 +106,19 @@ class EnquiryController extends BaseController
             Log::exception($e);
             return Response::make(Lang::get('error.bad'), Constants::DATABASE_ERROR_CODE);
         }
-        if (empty($enquiries))
+
+        if (!is_array($enquiries) && !$enquiries)
             return Response::make(Lang::get('error.database'), Constants::DATABASE_ERROR_CODE);
+
+        else if (empty($enquiries)) {
+            return Response::json($enquiries);
+        }
 
         return $enquiries->toJson();
 
 
     }
+
 
     public function postGetFollowups()
     {
@@ -143,15 +148,42 @@ class EnquiryController extends BaseController
         else if (empty($enquiries)) {
             return Response::json($enquiries);
         }
-//
-//            if (empty($enquiries))
-//                return Response::make(Lang::get('error.database'), Constants::DATABASE_ERROR_CODE);
 
         return $enquiries->toJson();
     }
 
-    public function postGetExportEnquiries(){
+    public function postGetExportEnquiries()
+    {
+        $data = (object)Input::json();
 
+        if (empty($data)) {
+            return Response::make(Lang::get('errors.bad'), Constants::BAD_REQUEST_CODE);
+        }
+
+        $fromDate = !isset($data->fromDate) || empty($data->fromDate) ? new DateTime('now') : Util::getFromDate(new DateTime($data->fromDate));
+        $toDate = !isset($data->toDate) || empty($data->toDate) ? new DateTime('now') : Util::getToDate(new DateTime($data->toDate));
+
+        $status = isset($data->status) ? $data->status : array();
+        $branchIds = isset($data->branchIds) ? $data->branchIds : array();
+        $types = isset($data->types) ? $data->types : array();
+        $pageCount = isset($data->pageCount) ? $data->pageCount : PHP_INT_MAX;
+        $pageNumber = isset($data->pageNumber) ? $data->pageNumber : 0;
+        $skip = $pageNumber > 0 ? $pageCount * ($pageNumber - 1) : 0;
+        try {
+            $enquiries = $this->enquiryRepo->getEnquiries($branchIds, $status, $types, $fromDate, $toDate, $skip, $pageCount);
+        } catch (PDOException $e) {
+            Log::exception($e);
+            return Response::json(array('status' => false));
+        }
+        if (!is_array($enquiries) && !$enquiries)
+            return Response::json(array('status' => false));
+        if (is_array($enquiries) && count($enquiries) == 0)
+            return Response::json(array('status' => false));
+
+        $csvData = Util::ConvertEnquiriesToCSV($enquiries);
+        $filePath = Util::generateTempFilePath("csv");
+        File::put(Util::convertToAbsoluteURL($filePath), $csvData);
+        return Response::json(array('status' => true, 'filePath' => Util::convertToHttpURL($filePath)));
     }
 
     public function postGetExportFollowups()
@@ -166,9 +198,10 @@ class EnquiryController extends BaseController
         $toDate = !isset($data->toDate) || empty($data->toDate) ? new DateTime('now') : Util::getToDate(new DateTime($data->toDate));
         $branchIds = isset($data->branchIds) ? $data->branchIds : array();
         $types = isset($data->types) ? $data->types : array();
-        $pageCount = isset($data->pageCount) ? $data->pageCount : Constants::PAGECOUNT;
-        $pageNumber = isset($data->pageNumber) ? $data->pageNumber : 1;
-        $skip = $pageCount * ($pageNumber - 1);
+        $pageCount = isset($data->pageCount) ? $data->pageCount : PHP_INT_MAX;
+        $pageNumber = isset($data->pageNumber) ? $data->pageNumber : 0;
+        $skip = $pageNumber > 0 ? $pageCount * ($pageNumber - 1) : 0;
+
         try {
             $enquiries = $this->enquiryRepo->getFollowUps($fromDate, $toDate, $types, $branchIds, $skip, $pageCount);
         } catch (PDOException $e) {
@@ -181,10 +214,10 @@ class EnquiryController extends BaseController
         if (is_array($enquiries) && count($enquiries) == 0)
             return Response::json(array('status' => false));
 
-        $csvData = Util::ConvertEnquiryToCSV($enquiries);
+        $csvData = Util::ConvertFollowupToCSV($enquiries);
         $filePath = Util::generateTempFilePath("csv");
         File::put(Util::convertToAbsoluteURL($filePath), $csvData);
-        return Response::json(array('status' => false, 'filePath' => Util::convertToHttpURL($filePath)));
+        return Response::json(array('status' => true, 'filePath' => Util::convertToHttpURL($filePath)));
 
     }
 

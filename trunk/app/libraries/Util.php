@@ -59,7 +59,7 @@ class Util
         return array('Walk-in', 'Telephonic', 'Other');
     }
 
-    public static function ConvertEnquiryToCSV($enquiries)
+    public static function ConvertFollowupToCSV($enquiries)
     {
         $dataPoints = array();
 
@@ -67,7 +67,7 @@ class Util
             $row = array();
             $row['name'] = $enquiry->name;
             $row['mobile'] = $enquiry->mobile;
-            $row['demoDate'] = $enquiry->enquiryDate;
+            $row['followupDate'] = $enquiry->enquiryStatus[0]->followupDate;
             $row['program'] = $enquiry->program;
             $row['type'] = $enquiry->type;
             $row['status'] = $enquiry->enquiryStatus[0]->status;
@@ -78,13 +78,35 @@ class Util
         return Util::ConvertToCSV($dataPoints);
     }
 
+    public static function ConvertEnquiriesToCSV($enquiries)
+    {
+        $dataPoints = array();
+        foreach ($enquiries as $enquiry) {
+            $row = array();
+            $row['name'] = $enquiry->name;
+            $row['mobile'] = $enquiry->mobile;
+            $row['enquiryDate'] = $enquiry->enquiryDate;
+            $row['program'] = $enquiry->program;
+            $row['type'] = $enquiry->type;
+            $row['status'] = $enquiry->enquiryStatus[0]->status;
+            $row['branch'] = $enquiry->branch->name;
+            array_push($dataPoints, $row);
+        }
+        return Util::ConvertToCSV($dataPoints, false); //false passed for changed the header row status
+    }
+
     /**
      * @param array $dataPoints - array of data points to convert to csv
      * @return string - csv record for data points
      */
-    public static function ConvertToCSV(array $dataPoints)
+    public static function ConvertToCSV(array $dataPoints, $isFollowUp = true)
     {
         $csvData = "";
+        if ($isFollowUp)
+            $headerRow = "Name,Mobile,FollowUp Date,Program,Type,Status,Branch \n";
+        else
+            $headerRow = "Name,Mobile,Enquiry Date,Program,Type,Status,Branch\n";
+        $csvData .= $headerRow;
 
         foreach ($dataPoints as $data) {
             $dataRow = "";
@@ -102,14 +124,15 @@ class Util
 
     public static function convertToAbsoluteURL($filePath)
     {
-        $path=base_path();
-        $path=dirname(dirname($path));
-        return $path.'/public/'. ltrim($filePath, "/");
+        $path = base_path();
+        $path = dirname(dirname($path));
+        return $path . '/public/' . ltrim($filePath, "/");
     }
 
     public static function convertToHttpURL($filePath)
     {
-        return URL::base() . "/" . ltrim($filePath, "/");
+        return URL::asset("$filePath");
+//        return URL::asset('tmp/') . "/" . ltrim($filePath, "/");
     }
 
     public static function  generateTempFilePath($extension)

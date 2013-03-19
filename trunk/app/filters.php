@@ -35,7 +35,12 @@ App::after(function($request, $response)
 
 Route::filter('auth', function()
 {
-	if (Auth::guest()) return Redirect::route('login');
+    if (Auth::guest()) {
+        if (Request::ajax())
+            return Redirect::to('/user/login');
+        else
+            return Redirect::to('/#/user/login');
+    }
 });
 
 

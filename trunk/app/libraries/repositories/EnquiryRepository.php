@@ -31,6 +31,7 @@ class EnquiryRepository
                 $enquiryObject->save();
                 $status->enquiry_id = $enquiryObject->id;
                 $status->save();
+                $enquiryObject->status=$status;
 
             } catch (Exception $e) {
                 Log::error("$e");

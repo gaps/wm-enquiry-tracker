@@ -50,7 +50,7 @@
     <div class="span9">
         <p>
             <a href="#myModal" role="button" class="btn" data-toggle="modal">Add Enquiry</a>
-            <button class="btn" type="button">Export</button>
+            <button class="btn" type="button" ng-click="exportData()">Export</button>
         </p>
         <table class="table table-hover table-condensed">
             <thead>
@@ -73,12 +73,12 @@
                 <td>{{ enquiry.name }}</td>
                 <td>{{ enquiry.mobile }}</td>
                 <td>{{ enquiry.program }}</td>
-                <td>{{ enquiry.enquiry_status[0].status }}</td>
+                <td>{{ getStatus(enquiry)}}</td>
                 <td>{{ enquiry.type }}</td>
                 <td>{{ enquiry.branch.name }}</td>
                 <td style="max-width: 100px;">{{ getStatusText(enquiry) }}</td>
                 <td>
-                    <div class="dropdown">
+                    <div ng-show="checkStatus(enquiry)" class="dropdown">
                         <a class="dropdown-toggle" id="dLabel" role="button" data-toggle="dropdown" data-target="#"
                            href="/page.html">
                             Edit
@@ -91,6 +91,7 @@
                             <li><a ng-click="showNotInterestedModel(enquiry)">Not Interested</a></li>
                         </ul>
                     </div>
+                    <span ng-show="checkStatus(enquiry)"></span>
                 </td>
             </tr>
 
@@ -111,9 +112,11 @@
         </table>
         <div>
             <button class="btn" ng-disabled="previousPage == 0" ng-click="updatePrevious()"><i
-                    class="icon-caret-left icon-large"></i> << </button>
-            <button class="btn" ng-disabled="followUps.length ==0" ng-click="updateNext()"><i
-                    class="icon-caret-right icon-large"></i> >>  </button>
+                    class="icon-caret-left icon-large"></i> <<
+            </button>
+            <button class="btn" ng-disabled="enquiries.length ==0" ng-click="updateNext()"><i
+                    class="icon-caret-right icon-large"></i> >>
+            </button>
         </div>
     </div>
 
@@ -202,20 +205,9 @@
             <label>Mobile</label>
             <input type="text" ng-model="enquiry.mobile" placeholder="Mobile">
             <label>Course</label>
-
-            <select ng-model="enquiry.program">
-                <option ng-repeat="course in courses" value="{{  course }}">{{ course }}</option>
-            </select>
+            <input type="text" ng-model="enquiry.program" placeholder="Course">
             <label>Email-Id</label>
-            <input type="text" ng-model="enquiry.email" placeholder="Email-Id">
-            <!--            <label>Status</label>-->
-            <!--            <select ng-model="enquiry.status">-->
-            <!--                <option value="enrolled">Enrolled</option>-->
-            <!--                <option value="follow_up">Enrolled-Later</option>-->
-            <!--                <option value="not_interested">Not Interested</option>-->
-            <!--                <option value="created">New</option>-->
-            <!--            </select>-->
-
+            <input type="text" ng-model="enquiry.email" placeholder="Course">
             <label>Type</label>
             <select ng-model="enquiry.type">
                 <option value="Walk-in">Walk-in</option>
