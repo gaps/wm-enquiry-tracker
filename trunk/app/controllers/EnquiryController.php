@@ -59,6 +59,8 @@ class EnquiryController extends BaseController
         return Response::json(Util::getCourses());
     }
 
+
+
     public function postAddEnquiry()
     {
         $data = (object)Input::json();
@@ -146,6 +148,10 @@ class EnquiryController extends BaseController
 //                return Response::make(Lang::get('error.database'), Constants::DATABASE_ERROR_CODE);
 
         return $enquiries->toJson();
+    }
+
+    public function postGetExportEnquiries(){
+
     }
 
     public function postGetExportFollowups()
