@@ -7,7 +7,8 @@
     <title>Wisdom Mart - Enquiry Tracker</title>
 
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
-    <link href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.0/css/bootstrap-combined.no-icons.min.css" media="all" type="text/css" rel="stylesheet">
+    <link href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.0/css/bootstrap-combined.no-icons.min.css"
+          media="all" type="text/css" rel="stylesheet">
     <link href="<% URL::asset('css/datepicker.css'); %>" media="all" type="text/css" rel="stylesheet">
     <link href="<% URL::asset('css/application.css'); %>" media="all" type="text/css" rel="stylesheet">
 
@@ -45,9 +46,8 @@
                 @if(Auth::check())
                 <ul class="nav">
                     <li class="active"><a href="/">Home</a></li>
-                    <li><a href="#/demo/add">Add Enquiry</a></li>
-                    <li><a href="#/demo/list">Enquiries List</a></li>
-                    <li><a href="#/demo/follow_up">Follow Up</a></li>
+                    <li><a href="#/enquiry/list">Enquiries List</a></li>
+                    <li><a href="#/followup/list">Follow Up</a></li>
                     <li><a href="<% URL::to("/user/logout") %>">Logout</a></li>
                 </ul>
                 @endif

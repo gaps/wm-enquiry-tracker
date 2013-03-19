@@ -10,6 +10,7 @@
 | and give it the Closure to execute when that URI is requested.
 |
 */
+
 Route::controller('enquiry', 'EnquiryController');
 Route::controller('user', 'UserController');
 Route::controller('', 'HomeController');

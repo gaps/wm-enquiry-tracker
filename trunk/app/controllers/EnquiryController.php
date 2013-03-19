@@ -31,7 +31,7 @@ class EnquiryController extends BaseController
         $branchesArray = array();
         $branches = Auth::user()->branches()->get();
         foreach ($branches as $branch) {
-            $branchesArray[] =array( 'name'=>$branch->name,'id'=>$branch->id);
+            $branchesArray[] = array('name' => $branch->name, 'id' => $branch->id);
         }
 
         return Response::json($branchesArray);
@@ -70,14 +70,7 @@ class EnquiryController extends BaseController
         $program = isset($data->program) ? $data->program : "";
         $branch_id = $data->branch_id;
         $type = isset($data->type) ? $data->type : "";
-
-        try {
-            $newEnquiry = $this->enquiryRepo->createEnquiry($name, $mobile, $email, $date, $program, $type, Auth::user()->id, $branch_id);
-        } catch (PDOException $e) {
-            Log::exception($e);
-            return Response::make(Lang::get('error.bad'), Constants::DATABASE_ERROR_CODE);
-        }
-
+        $newEnquiry = $this->enquiryRepo->createEnquiry($name, $mobile, $email, $date, $program, $type, Auth::user()->id, $branch_id);
         if (empty($newEnquiry))
             return Response::make(Lang::get('error.database'), Constants::DATABASE_ERROR_CODE);
 
@@ -86,7 +79,7 @@ class EnquiryController extends BaseController
 
     public function postGetEnquiries()
     {
-          $data = (object)Input::json();
+        $data = (object)Input::json();
 
         if (empty($data)) {
             return Response::make(Lang::get('errors.bad'), Constants::BAD_REQUEST_CODE);
@@ -129,7 +122,7 @@ class EnquiryController extends BaseController
         $pageNumber = isset($data->pageNumber) ? $data->pageNumber : 1;
         $skip = $pageCount * ($pageNumber - 1);
         try {
-            $enquiries = $this->enquiryRepo->getFollowUps($fromDate, $toDate, $types, $branchIds,$skip,$pageCount);
+            $enquiries = $this->enquiryRepo->getFollowUps($fromDate, $toDate, $types, $branchIds, $skip, $pageCount);
         } catch (PDOException $e) {
             Log::exception($e);
             return Response::make(Lang::get('error.database'), Constants::DATABASE_ERROR_CODE);
@@ -146,7 +139,39 @@ class EnquiryController extends BaseController
 //                return Response::make(Lang::get('error.database'), Constants::DATABASE_ERROR_CODE);
 
         return $enquiries->toJson();
+    }
 
+    public function postGetExportFollowups()
+    {
+        $data = (object)Input::json();
+
+        if (empty($data)) {
+            return Response::make(Lang::get('errors.bad'), Constants::BAD_REQUEST_CODE);
+        }
+
+        $fromDate = !isset($data->fromDate) || empty($data->fromDate) ? new DateTime('now') : Util::getFromDate(new DateTime($data->fromDate));
+        $toDate = !isset($data->toDate) || empty($data->toDate) ? new DateTime('now') : Util::getToDate(new DateTime($data->toDate));
+        $branchIds = isset($data->branchIds) ? $data->branchIds : array();
+        $types = isset($data->types) ? $data->types : array();
+        $pageCount = isset($data->pageCount) ? $data->pageCount : Constants::PAGECOUNT;
+        $pageNumber = isset($data->pageNumber) ? $data->pageNumber : 1;
+        $skip = $pageCount * ($pageNumber - 1);
+        try {
+            $enquiries = $this->enquiryRepo->getFollowUps($fromDate, $toDate, $types, $branchIds, $skip, $pageCount);
+        } catch (PDOException $e) {
+            Log::exception($e);
+            return Response::json(array('status' => false));
+        }
+
+        if (!is_array($enquiries) && !$enquiries)
+            return Response::json(array('status' => false));
+        if (is_array($enquiries) && count($enquiries) == 0)
+            return Response::json(array('status' => false));
+
+        $csvData = Util::ConvertEnquiryToCSV($enquiries);
+        $filePath = Util::generateTempFilePath("csv");
+        File::put(Util::convertToAbsoluteURL($filePath), $csvData);
+        return Response::json(array('status' => false, 'filePath' => Util::convertToHttpURL($filePath)));
 
     }
 

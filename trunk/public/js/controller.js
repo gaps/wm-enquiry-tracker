@@ -59,11 +59,10 @@ angular.module('app')
         }
 
         $scope.addEnquiry = function (enquiry) {
-            var status=$enquiryService.addEnquiries(enquiry);
+            var status = $enquiryService.addEnquiries(enquiry);
             $('#myModal').modal('hide');
-            if(status)
-            {
-                window.location.href='/#/enquiry/list';
+            if (status) {
+                window.location.href = '/#/enquiry/list';
             }
 
         }
@@ -364,7 +363,7 @@ angular.module('app')
         $scope.getFilterFollowups = function () {
             $scope.toDate = $('#toDate').val();
             $scope.fromDate = $('#fromDate').val();
-            $scope.followUps = $followupService.getFollowups($scope.fromDate, $scope.toDate, $scope.getSelectedBranches(), $scope.getSelectedTypes(),$scope.pageNumber,$scope.pageCount);
+            $scope.followUps = $followupService.getFollowups($scope.fromDate, $scope.toDate, $scope.getSelectedBranches(), $scope.getSelectedTypes(), $scope.pageNumber, $scope.pageCount);
         }
 
         $scope.updateNext = function () {
@@ -380,6 +379,30 @@ angular.module('app')
             $scope.previousPage = $scope.previousPage - 1;
             $scope.getFilterFollowups();
 
+        }
+
+        $scope.exportData = function () {
+            $scope.toDate = $('#toDate').val();
+            $scope.fromDate = $('#fromDate').val();
+            $http.post(
+                '/enquiry/get-export-followups',
+                {
+                    toDate: $scope.toDate,
+                    fromDate: $scope.fromDate,
+                    branchIds: $scope.getSelectedBranches(),
+                    types: $scope.getSelectedTypes()
+                }
+            ).success(function ($data) {
+                    if ($data.status != false) {
+                        var downloadFrame = '<iframe height="0" width="0" style="display:none" src="' + $data.filePath + '"></iframe>';
+                        $(downloadFrame).appendTo('body');
+                    }
+                    else {
+                        alert('No Data to export');
+                    }
+                }).error(function ($data) {
+                    //todo: work for error
+                });
         }
 
         setTimeout(function () {

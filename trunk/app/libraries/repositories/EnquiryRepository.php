@@ -34,6 +34,7 @@ class EnquiryRepository
 
             } catch (Exception $e) {
                 Log::error("$e");
+                return false;
             }
         });
         return $enquiryObject;

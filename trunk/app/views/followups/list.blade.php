@@ -33,12 +33,12 @@
 
 <span class="span10">
 <p>
-    <button class="btn" type="button">Export</button>
+    <button class="btn" type="button" ng-click="exportData()">Export to Excel</button>
 </p>
 <table class="table table-striped">
     <thead>
     <tr>
-        <th>Date</th>
+        <th>FollowUp Date</th>
         <th>First Name</th>
         <th>Mobile</th>
         <th>Course</th>
@@ -52,7 +52,7 @@
     <tbody ng-show="followUps.length>0">
 
     <tr ng-repeat="followup in followUps" ng-class="getStatusCss(followup)">
-        <td>{{ getFormattedDate(followup.enquiryDate) }}</td>
+        <td>{{ getFormattedDate(followup.enquiry_status[0].followupDate) }}</td>
         <td>{{ followup.name }}</td>
         <td>{{ followup.mobile }}</td>
         <td>{{ followup.program }}</td>

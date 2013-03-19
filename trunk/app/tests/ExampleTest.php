@@ -1,22 +1,19 @@
 <?php
 
-use Zizaco\FactoryMuff\Facade\FactoryMuff;
+class ExampleTest extends TestCase {
 
-class ExampleTest extends TestCase
-{
-    public function setUp()
-    {
-        parent::setUp(); // Don't forget this!
-        $this->prepareForTests();
-    }
+	/**
+	 * A basic functional test example.
+	 *
+	 * @return void
+	 */
+	public function testBasicExample()
+	{
+		$crawler = $this->client->request('GET', '/');
 
-    public function testDb()
-    {
-        $user = FactoryMuff::create('User');
+		$this->assertTrue($this->client->getResponse()->isOk());
 
-        $user->save();
+		$this->assertCount(1, $crawler->filter('h1:contains("Hello World!")'));
+	}
 
-        $users = User::all();
-        $this->assertCount(1, $users);
-    }
 }
