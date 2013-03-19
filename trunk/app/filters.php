@@ -33,8 +33,8 @@ App::after(function($request, $response)
 |
 */
 
-Route::filter('auth', function()
-{
+
+Route::filter('auth', function () {
     if (Auth::guest()) {
         if (Request::ajax())
             return Redirect::to('/user/login');
@@ -42,7 +42,6 @@ Route::filter('auth', function()
             return Redirect::to('/#/user/login');
     }
 });
-
 
 Route::filter('guest', function()
 {

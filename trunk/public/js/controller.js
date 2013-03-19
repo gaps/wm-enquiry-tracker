@@ -63,12 +63,10 @@ angular.module('app')
         }
 
         $scope.addEnquiry = function (enquiry) {
-            var status = $enquiryService.addEnquiries(enquiry);
-            if (status) {
+            $enquiryService.addEnquiries(enquiry).then(function (value) {
                 $('#myModal').modal('hide');
-                console.log(status);
-                $scope.enquiries.push(status);
-            }
+                $scope.enquiries.unshift(value);
+            });
 
         }
 
@@ -485,7 +483,7 @@ angular.module('app')
         }
 
         setTimeout(function () {
-            $scope.followUps = $followupService.getFollowups($scope.fromDate, $scope.toDate, $scope.getSelectedBranches(), $scope.getSelectedTypes());
+            $scope.followUps = $followupService.getFollowups($scope.fromDate, $scope.toDate, $scope.getSelectedBranches(), $scope.getSelectedTypes(), $scope.pageNumber, $scope.pageCount);
         }, 500);
 
     }
