@@ -191,7 +191,7 @@
 <div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
      style="display: none;">
     <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">Ã—</button>
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">X</button>
         <h3 style="border:none;" id="myModalLabel">Add Enquiry</h3>
 
     </div>
@@ -199,15 +199,18 @@
         <p>
         </p>
 
-        <form>
+        <form id="addenquiry">
             <label>Name</label>
             <input type="text" ng-model="enquiry.name" placeholder="Name">
             <label>Mobile</label>
             <input type="text" ng-model="enquiry.mobile" placeholder="Mobile">
             <label>Course</label>
-            <input type="text" ng-model="enquiry.program" placeholder="Course">
+
+            <select ng-model="enquiry.program">
+                <option ng-repeat="course in courses" value="{{  course }}">{{ course }}</option>
+            </select>
             <label>Email-Id</label>
-            <input type="text" ng-model="enquiry.email" placeholder="Course">
+            <input type="text" ng-model="enquiry.email" placeholder="Email-Id">
             <label>Type</label>
             <select ng-model="enquiry.type">
                 <option value="Walk-in">Walk-in</option>
@@ -218,6 +221,7 @@
             <select ng-model="enquiry.branchId">
                 <option ng-repeat="branch in branches" value="{{ branch.value.id }}">{{ branch.value.name }}</option>
             </select>
+
         </form>
         <p></p>
     </div>

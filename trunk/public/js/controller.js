@@ -65,6 +65,7 @@ angular.module('app')
         $scope.addEnquiry = function (enquiry) {
             $enquiryService.addEnquiries(enquiry).then(function (value) {
                 $('#myModal').modal('hide');
+                $scope.enquiry = {};
                 $scope.enquiries.unshift(value);
             });
 
@@ -73,12 +74,14 @@ angular.module('app')
         $scope.getEnquiries = function () {
             $scope.toDate = $('#toDate').val();
             $scope.fromDate = $('#fromDate').val();
-            $scope.enquiries = $enquiryService.getEnquiries($scope.fromDate, $scope.toDate, $scope.getSelectedBranches(), $scope.getSelectedStatuses(), $scope.getSelectedTypes(), $scope.pageNumber, $scope.pageCount);
 
+            $enquiryService.getEnquiries($scope.fromDate, $scope.toDate, $scope.getSelectedBranches(), $scope.getSelectedStatuses(), $scope.getSelectedTypes(), $scope.pageNumber, $scope.pageCount).then(function (value) {
+                $scope.enquiries = value;
+            });
         }
 
         $scope.getStatusText = function (enquiry) {
-            return enquiry.enquiry_status.length > 0 ? ((enquiry.enquiry_status[0].remarks == null) || (enquiry.enquiry_status[0].remarks == "") ? "No Remarks Available" : enquiry.enquiry_status[0].remarks) : "No Remarks Available";
+            return enquiry.enquiry_status.length > 0 ? ((enquiry.enquiry_status[0].remarks == null) || (enquiry.enquiry_status[0].remarks == "") ? "NA" : enquiry.enquiry_status[0].remarks) : "NA";
         }
 
         $scope.updateNext = function () {
@@ -194,6 +197,11 @@ angular.module('app')
                 });
 
         }
+        $scope.getCourses = function () {
+            $scope.courses = $userService.getCourses();
+        }
+
+        $scope.getCourses();
         $scope.setNew = function ($enquiry) {
             $http.post('enquiry/mark-enquiry-new', {enquiryId: $enquiry.id}).success(function ($newEnquiryStatus) {
                 $enquiry.enquiry_status.unshift($newEnquiryStatus);
@@ -249,7 +257,9 @@ angular.module('app')
         }
         setTimeout(function () {
 
-            $scope.enquiries = $enquiryService.getEnquiries($scope.fromDate, $scope.toDate, $scope.getSelectedBranches(), $scope.getSelectedStatuses(), $scope.getSelectedTypes(), $scope.pageNumber, $scope.pageCount);
+            $enquiryService.getEnquiries($scope.fromDate, $scope.toDate, $scope.getSelectedBranches(), $scope.getSelectedStatuses(), $scope.getSelectedTypes(), $scope.pageNumber, $scope.pageCount).then(function (value) {
+                $scope.enquiries = value;
+            });
         }, 300);
 
         $scope.getStatusCss = function ($enquiry) {
