@@ -54,6 +54,11 @@ class EnquiryController extends BaseController
         return Response::json(Util::getStatus());
     }
 
+    public function getCourses()
+    {
+        return Response::json(Util::getCourses());
+    }
+
     public function postAddEnquiry()
     {
         $data = (object)Input::json();
@@ -91,9 +96,11 @@ class EnquiryController extends BaseController
         $status = isset($data->status) ? $data->status : array();
         $branchIds = isset($data->branchIds) ? $data->branchIds : array();
         $types = isset($data->types) ? $data->types : array();
-
+        $pageCount = isset($data->pageCount) ? $data->pageCount : Constants::PAGECOUNT;
+        $pageNumber = isset($data->pageNumber) ? $data->pageNumber : 1;
+        $skip = $pageCount * ($pageNumber - 1);
         try {
-            $enquiries = $this->enquiryRepo->getEnquiries($branchIds, $status, $types, $fromDate, $toDate);
+            $enquiries = $this->enquiryRepo->getEnquiries($branchIds, $status, $types, $fromDate, $toDate, $skip, $pageCount);
         } catch (PDOException $e) {
             Log::exception($e);
             return Response::make(Lang::get('error.bad'), Constants::DATABASE_ERROR_CODE);

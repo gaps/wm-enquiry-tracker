@@ -109,7 +109,12 @@
             </tbody>
 
         </table>
-
+        <div>
+            <button class="btn" ng-disabled="previousPage == 0" ng-click="updatePrevious()"><i
+                    class="icon-caret-left icon-large"></i> << </button>
+            <button class="btn" ng-disabled="followUps.length ==0" ng-click="updateNext()"><i
+                    class="icon-caret-right icon-large"></i> >>  </button>
+        </div>
     </div>
 
 
@@ -197,9 +202,12 @@
             <label>Mobile</label>
             <input type="text" ng-model="enquiry.mobile" placeholder="Mobile">
             <label>Course</label>
-            <input type="text" ng-model="enquiry.program" placeholder="Course">
+
+            <select ng-model="enquiry.program">
+                <option ng-repeat="course in courses" value="{{  course }}">{{ course }}</option>
+            </select>
             <label>Email-Id</label>
-            <input type="text" ng-model="enquiry.email" placeholder="Course">
+            <input type="text" ng-model="enquiry.email" placeholder="Email-Id">
             <!--            <label>Status</label>-->
             <!--            <select ng-model="enquiry.status">-->
             <!--                <option value="enrolled">Enrolled</option>-->

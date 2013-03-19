@@ -10,7 +10,11 @@ angular.module('app')
         $scope.fromDate = dateFormat(new Date(), 'dd mmmm yyyy');
         $scope.enquiries = [];
         $scope.enquiry = {};
-
+        $scope.courses = [];
+        $scope.pageNumber = 1;
+        $scope.pageCount = 25;
+        $scope.previousPage = 0;
+        $scope.nextPage = $scope.pageNumber + 1;
 
         $userService.getBranches().then(function (data) {
             $scope.branches = data.map(function (val) {
@@ -28,6 +32,12 @@ angular.module('app')
             });
         });
 
+
+        $scope.getCourses = function () {
+            $scope.courses = $userService.getCourses();
+        }
+
+        $scope.getCourses();
         $userService.getStatuses().then(function (data) {
             $scope.statuses = data.map(function (val) {
                 return {"value": val, "selected": true};
@@ -70,12 +80,12 @@ angular.module('app')
         $scope.getEnquiries = function () {
             $scope.toDate = $('#toDate').val();
             $scope.fromDate = $('#fromDate').val();
-            $scope.enquiries = $enquiryService.getEnquiries($scope.fromDate, $scope.toDate, $scope.getSelectedBranches(), $scope.getSelectedStatuses(), $scope.getSelectedTypes());
+            $scope.enquiries = $enquiryService.getEnquiries($scope.fromDate, $scope.toDate, $scope.getSelectedBranches(), $scope.getSelectedStatuses(), $scope.getSelectedTypes(),$scope.pageNumber, $scope.pageCount);
 
         }
 
         $scope.getStatusText = function (enquiry) {
-            return enquiry.enquiry_status.length > 0 ? enquiry.enquiry_status[0].remarks : "No Remarks Available";
+            return enquiry.enquiry_status.length > 0 ?  ((enquiry.enquiry_status[0].remarks==null)||(enquiry.enquiry_status[0].remarks=="")?"No Remarks Available": enquiry.enquiry_status[0].remarks):"No Remarks Available";
         }
 
         $scope.setEnrollLater = function () {
@@ -168,12 +178,25 @@ angular.module('app')
                     //todo: log this
                 });
         }
+        $scope.updateNext = function () {
+            $scope.previousPage = $scope.pageNumber;
+            $scope.pageNumber = $scope.nextPage;
+            $scope.nextPage = $scope.nextPage + 1;
+            $scope.getEnquiries();
+        }
 
+        $scope.updatePrevious = function () {
+            $scope.pageNumber = $scope.previousPage;
+            $scope.nextPage = $scope.pageNumber + 1;
+            $scope.previousPage = $scope.previousPage - 1;
+            $scope.getEnquiries();
+
+        }
 
         setTimeout(function () {
 
-            $scope.enquiries = $enquiryService.getEnquiries($scope.fromDate, $scope.toDate, $scope.getSelectedBranches(), $scope.getSelectedStatuses(), $scope.getSelectedTypes());
-        }, 3000);
+            $scope.enquiries = $enquiryService.getEnquiries($scope.fromDate, $scope.toDate, $scope.getSelectedBranches(), $scope.getSelectedStatuses(), $scope.getSelectedTypes(),$scope.pageNumber, $scope.pageCount);
+        }, 300);
 
         $scope.getStatusCss = function ($enquiry) {
             switch ($enquiry.enquiry_status[0].status) {
@@ -406,7 +429,7 @@ angular.module('app')
         }
 
         setTimeout(function () {
-            $scope.followUps = $followupService.getFollowups($scope.fromDate, $scope.toDate, $scope.getSelectedBranches(), $scope.getSelectedTypes());
+            $scope.followUps = $followupService.getFollowups($scope.fromDate, $scope.toDate, $scope.getSelectedBranches(), $scope.getSelectedTypes(),$scope.pageNumber, $scope.pageCount);
         }, 500);
 
     }

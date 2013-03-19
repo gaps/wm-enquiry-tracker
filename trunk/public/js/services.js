@@ -15,10 +15,10 @@ module.factory('UserService', ["$http", "$q", function ($http, $q) {
                     else
                         deferred.resolve([]);
                 }
-            ).error(function ($e) {
+            ).error(function (e) {
                     //if there is an error processing data, reject it and log error
-                    log('error', $e);
-                    deferred.reject($e);
+                    console.log('error', e);
+                    deferred.reject(e);
                 }
             );
 
@@ -38,16 +38,37 @@ module.factory('UserService', ["$http", "$q", function ($http, $q) {
                     else
                         deferred.resolve([]);
                 }
-            ).error(function ($e) {
+            ).error(function (e) {
                     //if there is an error processing data, reject it and log error
-                    log('error', $e);
-                    deferred.reject($e);
+                    console.log('error', e);
+                    deferred.reject(e);
                 }
             );
 
             return deferred.promise;
         },
+        getCourses: function () {
+            var deferred = $q.defer();          //defer for data
 
+            $http.get(
+                    '/enquiry/courses'
+                ).success(function (data) {
+                    //if data is proper array, return data else empty array
+                    if (Array.isArray(data)) {
+                        deferred.resolve(data);
+                    }
+                    else
+                        deferred.resolve([]);
+                }
+            ).error(function (e) {
+                    //if there is an error processing data, reject it and log error
+                    console.log('error', e);
+                    deferred.reject(e);
+                }
+            );
+
+            return deferred.promise;
+        },
 
         getStatuses: function () {
             var deferred = $q.defer();          //defer for data
@@ -62,10 +83,10 @@ module.factory('UserService', ["$http", "$q", function ($http, $q) {
                     else
                         deferred.resolve([]);
                 }
-            ).error(function ($e) {
+            ).error(function (e) {
                     //if there is an error processing data, reject it and log error
-                    log('error', $e);
-                    deferred.reject($e);
+                    console.log('error', e);
+                    deferred.reject(e);
                 }
             );
 
@@ -79,7 +100,7 @@ module.factory('UserService', ["$http", "$q", function ($http, $q) {
 module.factory('EnquiryService', ["$http", "$q", function ($http, $q) {
     return {
 
-        getEnquiries: function (fromDate, toDate, branchIds, status, types) {
+        getEnquiries: function (fromDate, toDate, branchIds, status, types,pageNumber,pageCount) {
             var deferred = $q.defer();          //defer for data
 
             $http.post(
@@ -89,7 +110,9 @@ module.factory('EnquiryService', ["$http", "$q", function ($http, $q) {
                     toDate: toDate,
                     branchIds: branchIds,
                     status: status,
-                    types: types
+                    types: types,
+                    pageNumber: pageNumber,
+                    pageCount: pageCount
                 }
             ).success(function (data) {
                     if (Array.isArray(data)) {

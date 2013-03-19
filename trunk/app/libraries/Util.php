@@ -38,6 +38,22 @@ class Util
         , array("name" => "Not Interested", 'id' => EnquiryStatus::NOT_INTERESTED));
     }
 
+    public static function getCourses()
+    {
+
+        return array(
+            "GMAT-Verbal",
+            "GMAT-Math",
+            "GRE-Verbal",
+            "GRE-Math",
+            "SAT Verbal",
+            "SAT-Math",
+            "IELTS",
+            "TOEFL",
+            "Speak Easy",
+        );
+    }
+
     public static function  getTypes()
     {
         return array('Walk-in', 'Telephonic', 'Other');
