@@ -143,11 +143,9 @@ module.factory('EnquiryService', ["$http", "$q", function ($http, $q) {
 
                 }
             ).success(function (data) {
-                    if (data) {
+
                         deferred.resolve(data);
-                    }
-                    else
-                        deferred.resolve([]);
+
                 }).error(function (data) {
                     console.log('error', data);
                     deferred.reject(data);

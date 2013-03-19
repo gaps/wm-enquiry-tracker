@@ -3,7 +3,11 @@
 angular.module('app', []).
     config(['$routeProvider' , function ($routeProvider) {
         $routeProvider.
+            when('/', {templateUrl: '/enquiry/list',
+                controller: 'Enquiry_List'
+            }).
             when('/user/login', {templateUrl: '/user/login', controller: 'User_Login'}).
+            when('/', {templateUrl: '/enquiry/list', controller: 'Enquiry_List'}).
             when('/followup/list', {templateUrl: '/enquiry/followups', controller: 'Followup_List'}).
             when('/enquiry/list', {
                 templateUrl: '/enquiry/list',
@@ -19,10 +23,10 @@ function initComponents() {
         //initialize datepicker component
 
         $(".datetime-input,.date-input").datepicker({
-            format:"dd MM yyyy",
-            autoclose:true,
-            todayBtn:true,
-            todayHighlight:true
+            format: "dd MM yyyy",
+            autoclose: true,
+            todayBtn: true,
+            todayHighlight: true
         });
     });
 }

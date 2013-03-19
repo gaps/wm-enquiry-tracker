@@ -10,6 +10,37 @@
 class EnquiryRepository
 {
 
+//    public function createEnquiry($name, $mobile, $email, $date, $program, $type, $user_id, $branch_id)
+//    {
+//        $enquiryObject = new Enquiry();
+//        $enquiryObject->name = $name;
+//        $enquiryObject->mobile = $mobile;
+//        $enquiryObject->email = $email;
+//        $enquiryObject->user_id = $user_id;
+//        $enquiryObject->enquiryDate = $date;
+//        $enquiryObject->program = $program;
+//        $enquiryObject->branch_id = $branch_id;
+//        $enquiryObject->type = $type;
+//
+//        $status = new EnquiryStatus();
+//        $status->status = EnquiryStatus::CREATED;
+//
+//
+//        DB::connection()->transaction(function () use ($status, $enquiryObject) {
+//            try {
+//                $enquiryObject->save();
+//                $status->enquiry_id = $enquiryObject->id;
+//                $status->save();
+//
+//            } catch (Exception $e) {
+//                Log::error("$e");
+//                return false;
+//            }
+//        });
+//        return $enquiryObject;
+//    }
+
+
     public function createEnquiry($name, $mobile, $email, $date, $program, $type, $user_id, $branch_id)
     {
         $enquiryObject = new Enquiry();
@@ -31,14 +62,17 @@ class EnquiryRepository
                 $enquiryObject->save();
                 $status->enquiry_id = $enquiryObject->id;
                 $status->save();
+                $enquiryObject->status=$status;
 
             } catch (Exception $e) {
                 Log::error("$e");
                 return false;
             }
+
         });
         return $enquiryObject;
     }
+
 
 
     public function getEnquiries($branchIds, $status, $types, $fromDate = null, $toDate = null, $skip = 0, $perPage = Constants::PAGECOUNT)

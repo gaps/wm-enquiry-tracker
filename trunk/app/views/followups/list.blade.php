@@ -74,7 +74,6 @@
                 </ul>
             </div>
         </td>
-
     </tr>
     </tbody>
     <tbody ng-show="followUps.length==0">
