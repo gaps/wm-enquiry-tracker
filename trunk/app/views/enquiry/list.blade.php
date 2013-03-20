@@ -80,6 +80,7 @@
                 <td style="max-width: 100px;">{{ getStatusText(enquiry) }}</td>
                 <td>
                     <div ng-show="checkStatus(enquiry)" class="dropdown">
+
                         <a class="dropdown-toggle" id="dLabel" role="button" data-toggle="dropdown" data-target="#"
                            href="/page.html">
                             Edit

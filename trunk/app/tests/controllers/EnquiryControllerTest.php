@@ -31,9 +31,9 @@ class EnquiryControllerTest extends TestCase
 
         $response = $this->action('POST', 'EnquiryController@postAddEnquiry', array(), array(), array(), array(), json_encode($data));
         $this->assertTrue($response->isOk());
-        $result=Enquiry::with('enquiryStatus')->get();
+        $result = Enquiry::with('enquiryStatus')->get();
         $this->assertEquals(1, count($result));
-        $this->assertEquals(1,count($result[0]->enquiryStatus));
+        $this->assertEquals(1, count($result[0]->enquiryStatus));
     }
 
 
@@ -210,6 +210,28 @@ class EnquiryControllerTest extends TestCase
         $this->assertTrue($response->isOk());
         $this->assertEquals(1, count(json_decode($response->getContent())));
         $this->assertEquals(json_decode($response->getContent(), true)['status'], EnquiryStatus::FOLLOW_UP);
+
+    }
+
+    public function testUpdateEnquiry()
+    {
+        $enquiry = FactoryMuff::create('Enquiry');
+
+        $data = array(
+            'enquiryId' => $enquiry->id,
+            'name' => "keshav ashta",
+            'mobile' => "9213036090",
+            'email' => "k@gmail.com",
+            'date' => date("Y-m-d"),
+            'program' => "program",
+            'branch_id' => $enquiry->branch_id,
+            'type' => "Walkin"
+        );
+
+        //checking for enquiry status size and enquiry status is enrolled
+        $response = $this->action('POST', 'EnquiryController@postUpdateEnquiry', array(), array(), array(), array(), json_encode($data));
+        $this->assertTrue($response->isOk());
+        $this->assertEquals(1, count(json_decode($response->getContent())));
 
     }
 

@@ -30,7 +30,7 @@ class EnquiryRepository
                 $enquiryObject->save();
                 $status->enquiry_id = $enquiryObject->id;
                 $status->save();
-                $enquiryObject->status=$status;
+                $enquiryObject->status = $status;
 
             } catch (Exception $e) {
                 Log::error("$e");
@@ -38,9 +38,8 @@ class EnquiryRepository
             }
 
         });
-        return Enquiry::with('enquiryStatus')->find( $enquiryObject->id);
+        return Enquiry::with('enquiryStatus')->find($enquiryObject->id);
     }
-
 
 
     public function getEnquiries($branchIds, $status, $types, $fromDate = null, $toDate = null, $skip = 0, $perPage = Constants::PAGECOUNT)
@@ -205,5 +204,32 @@ class EnquiryRepository
         return $enquiryStatus;
     }
 
+    public function updateEnquiry($enquiryId, $branchId,
+                                  $studentName,
+                                  $mobile, $email,
+                                  DateTime $enquiryDate,
+                                  $program, $type)
+    {
+        $enquiry = Enquiry::find($enquiryId);
+        if (empty($enquiry))
+            return false;
+
+        $enquiry->branch_id = $branchId;
+        $enquiry->name = $studentName;
+        $enquiry->mobile = $mobile;
+        $enquiry->program = $program;
+        $enquiry->email = $email;
+        $enquiry->enquiryDate = $enquiryDate;
+        $enquiry->type = $type;
+
+        $enquiry->save();
+        try {
+            $enquiry->save();
+        } catch (Exception $e) {
+            Log::error($e);
+            return false;
+        }
+        return $enquiry;
+    }
 
 }

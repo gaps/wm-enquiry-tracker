@@ -60,6 +60,9 @@
 
 
 <div class="container" ng-view></div>
+<div id="ajax-loader">
+    Loading ...
+</div>
 
 </body>
 </html>

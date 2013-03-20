@@ -24,7 +24,7 @@ angular.module('app')
 
         $scope.getFormattedDate = function ($date) {
             return moment($date).format('Do MMMM  YYYY');
-        }
+        };
 
         $userService.getTypes().then(function (data) {
             $scope.types = data.map(function (val) {
@@ -44,7 +44,8 @@ angular.module('app')
                     branchIds.push(branch.value.id);
             });
             return branchIds;
-        }
+        };
+
         $scope.getSelectedTypes = function () {
             var typeSelected = new Array();
             angular.forEach($scope.types, function (type) {
@@ -52,7 +53,8 @@ angular.module('app')
                     typeSelected.push(type.name);
             });
             return typeSelected;
-        }
+        };
+
         $scope.getSelectedStatuses = function () {
             var statusIds = new Array();
             angular.forEach($scope.statuses, function (status) {
@@ -60,7 +62,7 @@ angular.module('app')
                     statusIds.push(status.value.id);
             });
             return statusIds;
-        }
+        };
 
         $scope.addEnquiry = function (enquiry) {
             $enquiryService.addEnquiries(enquiry).then(function (value) {
@@ -69,9 +71,22 @@ angular.module('app')
                 $scope.enquiries.unshift(value);
             });
 
-        }
+        };
+
+
+        $scope.getPageEnquiries = function () {
+            $scope.toDate = $('#toDate').val();
+            $scope.fromDate = $('#fromDate').val();
+
+            $enquiryService.getEnquiries($scope.fromDate, $scope.toDate, $scope.getSelectedBranches(), $scope.getSelectedStatuses(), $scope.getSelectedTypes(), $scope.pageNumber, $scope.pageCount).then(function (value) {
+                $scope.enquiries = value;
+            });
+        };
 
         $scope.getEnquiries = function () {
+            $scope.pageNumber = 1;
+            $scope.pageCount = 25;
+            $scope.previousPage = 0;
             $scope.toDate = $('#toDate').val();
             $scope.fromDate = $('#fromDate').val();
 
@@ -88,14 +103,14 @@ angular.module('app')
             $scope.previousPage = $scope.pageNumber;
             $scope.pageNumber = $scope.nextPage;
             $scope.nextPage = $scope.nextPage + 1;
-            $scope.getEnquiries();
+            $scope.getPageEnquiries();
         }
 
         $scope.updatePrevious = function () {
             $scope.pageNumber = $scope.previousPage;
             $scope.nextPage = $scope.pageNumber + 1;
             $scope.previousPage = $scope.previousPage - 1;
-            $scope.getEnquiries();
+            $scope.getPageEnquiries();
 
         }
 
@@ -162,6 +177,8 @@ angular.module('app')
         $scope.showAddEnquiryModal = function () {
             $scope.enquiry = {};
             $('#myModal').modal('show');
+            $('#addEnquiryForm')[0].reset();
+            $('#myModal span').hide();
         }
 
         $scope.showEnrollModal = function ($enquiry) {
@@ -454,6 +471,15 @@ angular.module('app')
         }
 
         $scope.getFilterFollowups = function () {
+            $scope.pageNumber = 1;
+            $scope.pageCount = 25;
+            $scope.previousPage = 0;
+            $scope.toDate = $('#toDate').val();
+            $scope.fromDate = $('#fromDate').val();
+            $scope.followUps = $followupService.getFollowups($scope.fromDate, $scope.toDate, $scope.getSelectedBranches(), $scope.getSelectedTypes(), $scope.pageNumber, $scope.pageCount);
+        }
+
+        $scope.getPageFollowups = function () {
             $scope.toDate = $('#toDate').val();
             $scope.fromDate = $('#fromDate').val();
             $scope.followUps = $followupService.getFollowups($scope.fromDate, $scope.toDate, $scope.getSelectedBranches(), $scope.getSelectedTypes(), $scope.pageNumber, $scope.pageCount);
@@ -463,14 +489,14 @@ angular.module('app')
             $scope.previousPage = $scope.pageNumber;
             $scope.pageNumber = $scope.nextPage;
             $scope.nextPage = $scope.nextPage + 1;
-            $scope.getFilterFollowups();
+            $scope.getPageFollowups();
         }
 
         $scope.updatePrevious = function () {
             $scope.pageNumber = $scope.previousPage;
             $scope.nextPage = $scope.pageNumber + 1;
             $scope.previousPage = $scope.previousPage - 1;
-            $scope.getFilterFollowups();
+            $scope.getPageFollowups();
 
         }
 
@@ -531,6 +557,12 @@ angular.module('app')
                     }
                 });
         }
+    }
+    ]);
+
+angular.module('app')
+    .controller('Enquiry_Edit_Controller', ['$scope', '$http','$routeParams', function ($scope, $http,$routeParams) {
+
     }
     ]);
 
