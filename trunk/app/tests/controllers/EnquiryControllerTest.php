@@ -31,7 +31,9 @@ class EnquiryControllerTest extends TestCase
 
         $response = $this->action('POST', 'EnquiryController@postAddEnquiry', array(), array(), array(), array(), json_encode($data));
         $this->assertTrue($response->isOk());
-        $this->assertEquals(1, count(Enquiry::all()));
+        $result=Enquiry::with('enquiryStatus')->get();
+        $this->assertEquals(1, count($result));
+        $this->assertEquals(1,count($result[0]->enquiryStatus));
     }
 
 
@@ -69,8 +71,8 @@ class EnquiryControllerTest extends TestCase
         //checking for status filter
         $response = $this->action('POST', 'EnquiryController@postGetEnquiries', array(), array(), array(), array(), json_encode($data));
         $this->assertTrue($response->isOk());
-        $this->assertEquals(1, count(json_decode($response->original, true)));
-        $this->assertEquals(json_decode($response->original, true)[0]['enquiry_status'][0]['status'], EnquiryStatus::NOT_INTERESTED);
+        $this->assertEquals(1, count(json_decode($response->getContent(), true)));
+        $this->assertEquals(json_decode($response->getContent(), true)[0]['enquiry_status'][0]['status'], EnquiryStatus::NOT_INTERESTED);
 
     }
 
@@ -98,9 +100,9 @@ class EnquiryControllerTest extends TestCase
         );
 
         //checking for followup size
-        $response = $this->action('POST', 'EnquiryController@postGetFollowUps', array(), array(), array(), array(), json_encode($data));
+        $response = $this->action('POST', 'EnquiryController@postGetFollowups', array(), array(), array(), array(), json_encode($data));
         $this->assertTrue($response->isOk());
-        $this->assertEquals(1, count(json_decode($response->original, true)));
+        $this->assertEquals(1, count(json_decode($response->getContent(), true)));
 
 
         //second test
@@ -124,10 +126,7 @@ class EnquiryControllerTest extends TestCase
         //checking for status filter
         $response = $this->action('POST', 'EnquiryController@postGetFollowUps', array(), array(), array(), array(), json_encode($data));
         $this->assertTrue($response->isOk());
-        // Todo ask sir for empty response
-        $this->markTestIncomplete(
-            'check for empty response'
-        );
+        $this->assertEquals(0, count(json_decode($response->getContent())));
 
     }
 
@@ -148,8 +147,8 @@ class EnquiryControllerTest extends TestCase
         //checking for enquiry status size and enquiry status is enrolled
         $response = $this->action('POST', 'EnquiryController@postMarkEnrolled', array(), array(), array(), array(), json_encode($data));
         $this->assertTrue($response->isOk());
-        $this->assertEquals(1, count(json_decode($response->original)));
-        $this->assertEquals(json_decode($response->original, true)['status'], EnquiryStatus::ENROLLED);
+        $this->assertEquals(1, count(json_decode($response->getContent())));
+        $this->assertEquals(json_decode($response->getContent(), true)['status'], EnquiryStatus::ENROLLED);
 
     }
 
@@ -167,8 +166,8 @@ class EnquiryControllerTest extends TestCase
         //checking for enquiry status size and enquiry status is enrolled
         $response = $this->action('POST', 'EnquiryController@postMarkEnquiryNew', array(), array(), array(), array(), json_encode($data));
         $this->assertTrue($response->isOk());
-        $this->assertEquals(1, count(json_decode($response->original)));
-        $this->assertEquals(json_decode($response->original, true)['status'], EnquiryStatus::CREATED);
+        $this->assertEquals(1, count(json_decode($response->getContent())));
+        $this->assertEquals(json_decode($response->getContent(), true)['status'], EnquiryStatus::CREATED);
 
     }
 
@@ -188,8 +187,8 @@ class EnquiryControllerTest extends TestCase
         //checking for enquiry status size and enquiry status is enrolled
         $response = $this->action('POST', 'EnquiryController@postMarkEnquiryNotInterested', array(), array(), array(), array(), json_encode($data));
         $this->assertTrue($response->isOk());
-        $this->assertEquals(1, count(json_decode($response->original)));
-        $this->assertEquals(json_decode($response->original, true)['status'], EnquiryStatus::NOT_INTERESTED);
+        $this->assertEquals(1, count(json_decode($response->getContent())));
+        $this->assertEquals(json_decode($response->getContent(), true)['status'], EnquiryStatus::NOT_INTERESTED);
 
     }
 
@@ -209,8 +208,8 @@ class EnquiryControllerTest extends TestCase
         //checking for enquiry status size and enquiry status is enrolled
         $response = $this->action('POST', 'EnquiryController@postCreateFollowup', array(), array(), array(), array(), json_encode($data));
         $this->assertTrue($response->isOk());
-        $this->assertEquals(1, count(json_decode($response->original)));
-        $this->assertEquals(json_decode($response->original, true)['status'], EnquiryStatus::FOLLOW_UP);
+        $this->assertEquals(1, count(json_decode($response->getContent())));
+        $this->assertEquals(json_decode($response->getContent(), true)['status'], EnquiryStatus::FOLLOW_UP);
 
     }
 

@@ -5,7 +5,7 @@
 
         <div class="input-append date date-input" data-date-format="dd M yyyy">
             <input class="span1" type="text" id="fromDate" ng-model="fromDate">
-            <span class="add-on"><i class="icon-calender"></i></span>
+            <span class="add-on"><i class="icon-calendar"></i></span>
         </div>
 
         <label><strong>To Date</strong></label>
@@ -49,7 +49,8 @@
 
     <div class="span9">
         <p>
-            <a href="#myModal" role="button" class="btn" data-toggle="modal">Add Enquiry</a>
+<!--            <a href="#myModal" role="button" class="btn" data-toggle="modal">Add Enquiry</a>-->
+            <button class="btn" type="button" ng-click="showAddEnquiryModal()">Add Enquiry</button>
             <button class="btn" type="button" ng-click="exportData()">Export</button>
         </p>
         <table class="table table-hover table-condensed">
@@ -199,26 +200,45 @@
         <p>
         </p>
 
-        <form id="addenquiry">
+        <form name="form" id="addEnquiryForm" novalidate>
+           <div>
             <label>Name</label>
-            <input type="text" ng-model="enquiry.name" placeholder="Name">
-            <label>Mobile</label>
-            <input type="text" ng-model="enquiry.mobile" placeholder="Mobile">
+            <input type="text"  name="enquiryName" ng-required="true" ng-model="enquiry.name" placeholder="Name">
+ <span ng-show="form.enquiryName.$error.required && !form.enquiryName.$pristine "
+       class="validation invalid"><i class="icon-remove padding-right-5"></i>Please enter your name</span>
+           </div>
+            <div>
+                <label>Mobile</label>
+                <input type="text" id="inputMobile" name="mobile" ng-model="enquiry.mobile" ng-minLength="8"
+                       ng-pattern="/^\+{0,1}\d+$/" ng-required="true" placeholder="Mobile">
+                            <span ng-show="form.mobile.$error.required && !form.mobile.$pristine "
+                                  class="validation invalid"><i class="icon-remove padding-right-5"></i>Please enter your mobile number</span>
+                            <span
+                                ng-show="form.mobile.$invalid && !form.mobile.$pristine && !form.mobile.$error.required"
+                                class="validation invalid">
+                                <i class="icon-remove padding-right-5"></i>
+                                The mobile number must be at least 8 digits
+                            </span>
+                            <span ng-show="form.mobile.$valid && !form.mobile.$pristine"
+                                  class="validation valid">
+                                <i class="icon-ok padding-right-5"></i>
+                            </span>
+            </div>
             <label>Course</label>
 
-            <select ng-model="enquiry.program">
+            <select ng-model="enquiry.program" ng-required="true">
                 <option ng-repeat="course in courses" value="{{  course }}">{{ course }}</option>
             </select>
             <label>Email-Id</label>
-            <input type="text" ng-model="enquiry.email" placeholder="Email-Id">
+            <input type="email" ng-model="enquiry.email" ng-required="true" placeholder="Email-Id">
             <label>Type</label>
-            <select ng-model="enquiry.type">
+            <select ng-model="enquiry.type" ng-required="true">
                 <option value="Walk-in">Walk-in</option>
                 <option value="Telephonic">Telephonic</option>
                 <option value="Other">Other</option>
             </select>
             <label>Branch</label>
-            <select ng-model="enquiry.branchId">
+            <select ng-model="enquiry.branchId" ng-required="true">
                 <option ng-repeat="branch in branches" value="{{ branch.value.id }}">{{ branch.value.name }}</option>
             </select>
 
@@ -227,7 +247,7 @@
     </div>
     <div class="modal-footer">
         <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
-        <button class="btn btn-primary" ng-click="addEnquiry(enquiry)">Save</button>
+        <button class="btn btn-primary" ng-disabled="form.$invalid"  ng-click="addEnquiry(enquiry)">Save</button>
     </div>
 </div>
 

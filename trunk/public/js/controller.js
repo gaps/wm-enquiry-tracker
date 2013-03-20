@@ -158,6 +158,12 @@ angular.module('app')
                     //todo: log this
                 });
         }
+
+        $scope.showAddEnquiryModal = function () {
+            $scope.enquiry = {};
+            $('#myModal').modal('show');
+        }
+
         $scope.showEnrollModal = function ($enquiry) {
             $scope.currentEnquiry = $enquiry;
             $('#enroll-modal').modal('show');

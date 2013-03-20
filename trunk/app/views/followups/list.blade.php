@@ -4,7 +4,7 @@
         <label><strong>From Date</strong></label>
         <div class="input-append date date-input" data-date-format="dd M yyyy">
             <input class="span1" type="text" id="fromDate" ng-model="fromDate">
-            <span class="add-on"><i class="icon-calender"></i></span>
+        <span class="add-on"><i class="icon-calendar"></i></span>
         </div>
 
     <label><strong>To Date</strong></label>
