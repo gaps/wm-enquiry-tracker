@@ -14,7 +14,6 @@ class EnquiryControllerTest extends TestCase
 
     public function testPostAddEnquiry()
     {
-        $this->markTestSkipped('Skipped for testing');
         $user = $this->getUser();
         $branch = $this->getBranch();
         $this->be($user);
@@ -39,7 +38,6 @@ class EnquiryControllerTest extends TestCase
 
     public function testGetEnquires()
     {
-        $this->markTestSkipped('Skipped for testing');
         $firstEnquiryStatus = $this->getEnquiryStatus();
         $secondEnquiryStatus = $this->getEnquiryStatus();
 
@@ -74,7 +72,9 @@ class EnquiryControllerTest extends TestCase
         $this->assertTrue($response->isOk());
         $this->assertEquals(1, count(json_decode($response->getContent())));
 
-        $status = json_decode($response->getContent())[0]->enquiry_status[0]->status;
+        $content = json_decode($response->getContent());
+
+        $status = $content[0]->enquiry_status[0]->status;
         $this->assertEquals($status, EnquiryStatus::NOT_INTERESTED);
 
     }
@@ -135,7 +135,6 @@ class EnquiryControllerTest extends TestCase
 
     public function testMarkEnrolled()
     {
-        $this->markTestSkipped('Skipped for testing');
         $enquiry = FactoryMuff::create('Enquiry');
         $enquiryStatus = FactoryMuff::create('EnquiryStatus');
         $enquiryStatus->status = EnquiryStatus::FOLLOW_UP;
@@ -156,7 +155,6 @@ class EnquiryControllerTest extends TestCase
 
     public function testMarkEnquiryNew()
     {
-        $this->markTestSkipped('Skipped for testing');
         $enquiry = FactoryMuff::create('Enquiry');
         $enquiryStatus = FactoryMuff::create('EnquiryStatus');
         $enquiryStatus->status = EnquiryStatus::FOLLOW_UP;
@@ -176,7 +174,6 @@ class EnquiryControllerTest extends TestCase
 
     public function testMarkEnquiryNotInterested()
     {
-        $this->markTestSkipped('Skipped for testing');
         $enquiry = FactoryMuff::create('Enquiry');
         $enquiryStatus = FactoryMuff::create('EnquiryStatus');
         $enquiryStatus->status = EnquiryStatus::FOLLOW_UP;
@@ -196,7 +193,6 @@ class EnquiryControllerTest extends TestCase
 
     public function testCreateFollowup()
     {
-        $this->markTestSkipped('Skipped for testing');
         $enquiry = FactoryMuff::create('Enquiry');
         $enquiryStatus = FactoryMuff::create('EnquiryStatus');
         $enquiryStatus->status = EnquiryStatus::ENROLLED;
