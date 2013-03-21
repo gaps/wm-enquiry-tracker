@@ -1,15 +1,15 @@
 <div class="row">
-<span class="span2">
+<span class="span3">
     <p>
         <label><strong>From Date</strong></label>
         <div class="input-append date date-input" data-date-format="dd M yyyy">
-            <input class="span1" type="text" id="fromDate" ng-model="fromDate">
-            <span class="add-on"><i class="icon-calender"></i></span>
+            <input class="span2" type="text" id="fromDate" ng-model="fromDate">
+        <span class="add-on"><i class="icon-calendar"></i></span>
         </div>
 
     <label><strong>To Date</strong></label>
         <div class="input-append date date-input" data-date-format="dd M yyyy">
-            <input class="span1" type="text" id="toDate" ng-model="toDate">
+            <input class="span2" type="text" id="toDate" ng-model="toDate">
             <span class="add-on"><i class="icon-calendar"></i></span>
         </div>
     </p>
@@ -31,7 +31,7 @@
 
 </span>
 
-<span class="span10">
+<span class="span9">
 <p>
     <button class="btn" type="button" ng-click="exportData()">Export to Excel</button>
 </p>
@@ -91,9 +91,9 @@
 </table>
     <div>
         <button class="btn" ng-disabled="previousPage == 0" ng-click="updatePrevious()"><i
-                class="icon-caret-left icon-large"></i> << </button>
+                class="icon-arrow-left"></i>  </button>
         <button class="btn" ng-disabled="followUps.length ==0" ng-click="updateNext()"><i
-                class="icon-caret-right icon-large"></i> >>  </button>
+                class="icon-arrow-right"></i></button>
     </div>
 </span>
 </div>

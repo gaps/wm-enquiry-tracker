@@ -1,17 +1,17 @@
 <div class="row">
-    <div class="span2">
+    <div class="span3">
         <p>
             <label><strong>From Date</strong></label>
 
         <div class="input-append date date-input" data-date-format="dd M yyyy">
-            <input class="span1" type="text" id="fromDate" ng-model="fromDate">
-            <span class="add-on"><i class="icon-calender"></i></span>
+            <input class="span2" type="text" id="fromDate" ng-model="fromDate">
+            <span class="add-on"><i class="icon-calendar"></i></span>
         </div>
 
         <label><strong>To Date</strong></label>
 
         <div class="input-append date date-input" data-date-format="dd M yyyy">
-            <input class="span1" type="text" id="toDate" ng-model="toDate">
+            <input class="span2" type="text" id="toDate" ng-model="toDate">
             <span class="add-on"><i class="icon-calendar"></i></span>
         </div>
         </p>
@@ -49,7 +49,8 @@
 
     <div class="span9">
         <p>
-            <a href="#myModal" role="button" class="btn" data-toggle="modal">Add Enquiry</a>
+<!--            <a href="#myModal" role="button" class="btn" data-toggle="modal">Add Enquiry</a>-->
+            <button class="btn" type="button" ng-click="showAddEnquiryModal()">Add Enquiry</button>
             <button class="btn" type="button" ng-click="exportData()">Export</button>
         </p>
         <table class="table table-hover table-condensed">
@@ -89,9 +90,10 @@
                             <li><a ng-click="showEnrollModal(enquiry)">Enrolled</a></li>
                             <li><a ng-click="showFollowupModal(enquiry)">Enroll Later</a></li>
                             <li><a ng-click="showNotInterestedModel(enquiry)">Not Interested</a></li>
+                            <li><a href="#/enquiry/edit/{{enquiry.id}}">Edit</a></li>
                         </ul>
                     </div>
-                    <span ng-show="checkStatus(enquiry)"></span>
+                    <span ng-hide="checkStatus(enquiry)"><a  href="#/enquiry/edit/{{enquiry.id}}">Edit</a></span>
                 </td>
             </tr>
 
@@ -112,11 +114,10 @@
         </table>
         <div>
             <button class="btn" ng-disabled="previousPage == 0" ng-click="updatePrevious()"><i
-                    class="icon-caret-left icon-large"></i> <<
+                    class="icon-arrow-left"></i>
             </button>
             <button class="btn" ng-disabled="enquiries.length ==0" ng-click="updateNext()"><i
-                    class="icon-caret-right icon-large"></i> >>
-            </button>
+                    class="icon-arrow-right"></i> </button>
         </div>
     </div>
 
@@ -191,7 +192,7 @@
 <div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
      style="display: none;">
     <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">Ã—</button>
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">X</button>
         <h3 style="border:none;" id="myModalLabel">Add Enquiry</h3>
 
     </div>
@@ -199,31 +200,54 @@
         <p>
         </p>
 
-        <form>
+        <form name="form" id="addEnquiryForm" novalidate>
+           <div>
             <label>Name</label>
-            <input type="text" ng-model="enquiry.name" placeholder="Name">
-            <label>Mobile</label>
-            <input type="text" ng-model="enquiry.mobile" placeholder="Mobile">
+            <input type="text"  name="enquiryName" ng-required="true" ng-model="enquiry.name" placeholder="Name">
+ <span ng-show="form.enquiryName.$error.required && !form.enquiryName.$pristine "
+       class="validation invalid"><i class="icon-remove padding-right-5"></i>Please enter your name</span>
+           </div>
+            <div>
+                <label>Mobile</label>
+                <input type="text" id="inputMobile" name="mobile" ng-model="enquiry.mobile" ng-minLength="8"
+                       ng-pattern="/^\+{0,1}\d+$/" ng-required="true" placeholder="Mobile">
+                            <span ng-show="form.mobile.$error.required && !form.mobile.$pristine "
+                                  class="validation invalid"><i class="icon-remove padding-right-5"></i>Please enter your mobile number</span>
+                            <span
+                                ng-show="form.mobile.$invalid && !form.mobile.$pristine && !form.mobile.$error.required"
+                                class="validation invalid">
+                                <i class="icon-remove padding-right-5"></i>
+                                The mobile number must be at least 8 digits
+                            </span>
+                            <span ng-show="form.mobile.$valid && !form.mobile.$pristine"
+                                  class="validation valid">
+                                <i class="icon-ok padding-right-5"></i>
+                            </span>
+            </div>
             <label>Course</label>
-            <input type="text" ng-model="enquiry.program" placeholder="Course">
+
+            <select ng-model="enquiry.program" ng-required="true">
+                <option ng-repeat="course in courses" value="{{  course }}">{{ course }}</option>
+            </select>
             <label>Email-Id</label>
-            <input type="text" ng-model="enquiry.email" placeholder="Course">
+            <input type="email" ng-model="enquiry.email" ng-required="true" placeholder="Email-Id">
             <label>Type</label>
-            <select ng-model="enquiry.type">
-                <option value="Walk-in">Walk-in</option>
-                <option value="Telephonic">Telephonic</option>
-                <option value="Other">Other</option>
+
+
+            <select ng-model="enquiry.type" ng-required="true">
+                <option ng-repeat="type in types" value="{{type.name}}">{{type.name}}</option>
             </select>
             <label>Branch</label>
-            <select ng-model="enquiry.branchId">
+            <select ng-model="enquiry.branchId" ng-required="true">
                 <option ng-repeat="branch in branches" value="{{ branch.value.id }}">{{ branch.value.name }}</option>
             </select>
+
         </form>
         <p></p>
     </div>
     <div class="modal-footer">
         <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
-        <button class="btn btn-primary" ng-click="addEnquiry(enquiry)">Save</button>
+        <button class="btn btn-primary" ng-disabled="form.$invalid"  ng-click="addEnquiry(enquiry)">Save</button>
     </div>
 </div>
 

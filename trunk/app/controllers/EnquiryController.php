@@ -186,6 +186,7 @@ class EnquiryController extends BaseController
         return Response::json(array('status' => true, 'filePath' => Util::convertToHttpURL($filePath)));
     }
 
+
     public function postGetExportFollowups()
     {
         $data = (object)Input::json();
@@ -257,6 +258,45 @@ class EnquiryController extends BaseController
             return Response::make(Lang::get('error.database'), Constants::DATABASE_ERROR_CODE);
 
         return $enquiryStatus->toJson();
+    }
+
+    public function getEdit()
+    {
+        return View::make('enquiry/edit')->with('branches',Auth::user()->branches()->get());
+
+    }
+
+    public function postGetEnquiry()
+    {
+        $data = (object)Input::json();
+
+        if (empty($data))
+            return Response::make(Lang::get('errors.bad'), Constants::BAD_REQUEST_CODE);
+        $enquiryId = isset($data->enquiryId) ? $data->enquiryId : null;
+        return Enquiry::find($enquiryId)->toJson();
+    }
+
+    public function postUpdateEnquiry()
+    {
+        $data = (object)Input::json();
+
+        if (empty($data))
+            return Response::make(Lang::get('errors.bad'), Constants::BAD_REQUEST_CODE);
+
+        $enquiry_id = $data->enquiryId;
+        $name = isset($data->name) ? $data->name : "";
+        $mobile = isset($data->mobile) ? $data->mobile : NULL;
+        $email = isset($data->email) ? $data->email : NULL;
+        $date = isset($data->date) ? new DateTime($data->date) : new DateTime('now');
+        $program = isset($data->program) ? $data->program : "";
+        $branch_id = $data->branch_id;
+        $type = isset($data->type) ? $data->type : "";
+        $updatedEnquiry = $this->enquiryRepo->updateEnquiry($enquiry_id, $branch_id, $name, $mobile, $email, $date, $program, $type);
+
+        if ($updatedEnquiry == false)
+            return Response::make(Lang::get('error.database'), Constants::DATABASE_ERROR_CODE);
+
+        return $updatedEnquiry->toJson();
     }
 
 
