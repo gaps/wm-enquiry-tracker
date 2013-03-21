@@ -1,0 +1,66 @@
+body {
+    padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
+}
+
+body, input, button, select, textarea, .btn, label, .btn-group > .btn, .btn-group > .dropdown-menu, .btn-group > .popover {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 12px !important;
+}
+
+@media (max-width: 979px) {
+    body {
+        padding-top: 0px;
+    }
+}
+
+#ajax-loader {
+    text-align: center;
+    padding: 10px;
+    background: #feb215;
+    font-size: 20px;
+    font-weight: bold;
+    color: #9b6901;
+    position: absolute;
+    top: 40px;
+    width: 100%;
+}
+
+.pop-over {
+    text-decoration: underline;
+    cursor: pointer;
+}
+.color-box-enrolled{
+    width:13px;
+    height:13px;
+    margin-top:3px;
+    border:1px solid #ccc;
+    float:right;
+    background-color:#dff0d8;
+}
+
+.color-box-follow_up{
+    width:13px;
+    height:13px;
+    margin-top:3px;
+    border:1px solid #ccc;
+    float:right;
+    background-color:#d9edf7;
+}
+
+.color-box-not_interested{
+    width:13px;
+    height:13px;
+    margin-top:3px;
+    border:1px solid #ccc;
+    float:right;
+    background-color:#f2dede;
+}
+
+.color-box-created{
+    width:13px;
+    height:13px;
+    margin-top:3px;
+    border:1px solid #ccc;
+    float:right;
+    background-color:#fff;
+}
