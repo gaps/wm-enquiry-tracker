@@ -260,6 +260,12 @@ class EnquiryController extends BaseController
         return $enquiryStatus->toJson();
     }
 
+    public function getEdit()
+    {
+        return View::make('enquiry/edit')->with('branches',Auth::user()->branches()->get());
+
+    }
+
     public function postGetEnquiry()
     {
         $data = (object)Input::json();

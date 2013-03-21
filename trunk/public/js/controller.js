@@ -14,7 +14,7 @@ angular.module('app')
         $scope.pageCount = 25;
         $scope.previousPage = 0;
         $scope.nextPage = $scope.pageNumber + 1;
-
+        $scope.courses = [];
 
         $userService.getBranches().then(function (data) {
             $scope.branches = data.map(function (val) {
@@ -23,7 +23,7 @@ angular.module('app')
         });
 
         $scope.getFormattedDate = function ($date) {
-            return moment($date).format('Do MMMM  YYYY');
+            return moment($date).format('Do MMM  YYYY');
         };
 
         $userService.getTypes().then(function (data) {
@@ -561,7 +561,89 @@ angular.module('app')
     ]);
 
 angular.module('app')
-    .controller('Enquiry_Edit_Controller', ['$scope', '$http','$routeParams', function ($scope, $http,$routeParams) {
+    .controller('Enquiry_Edit_Controller', ['$scope', '$http', '$routeParams', 'UserService', function ($scope, $http, $routeParams, $userService) {
+        $scope.branches = [];
+        $scope.types = [];
+        $scope.statuses = [];
+        $scope.courses = [];
+        $scope.email = '';
+        $scope.name = '';
+        $scope.mobile = '';
+        $scope.course = '';
+        $scope.id = $routeParams.id;
+        $scope.courses = [];
+        $scope.enquiryDate = dateFormat(new Date(), 'dd mmmm yyyy');
+        $userService.getBranches().then(function (data) {
+            $scope.branches = data;
+        });
+
+        $scope.getFormattedDate = function ($date) {
+            return moment($date).format('Do MMM  YYYY');
+        };
+
+        $userService.getTypes().then(function (data) {
+            $scope.types = data;
+        });
+
+        $userService.getStatuses().then(function (data) {
+            $scope.statuses = data.map(function (val) {
+                return {"value": val, "selected": true};
+            });
+        });
+
+        $scope.getCourses = function () {
+            $scope.courses = $userService.getCourses();
+        }
+
+        $scope.getCourses();
+
+        $scope.editEnquiry = function () {
+            $scope.enquiryDate = $('#enquiryDate').val();         //bad hack because of angular update issue
+
+            $http.post(
+                '/enquiry/get-enquiry',
+                {
+                    enquiryId: $scope.id
+                }
+            ).success(function ($data) {
+                    $scope.name = $data.name;
+                    $scope.mobile = $data.mobile;
+                    $scope.course = $data.program;
+                    $scope.branchId = $data.branch_id;
+                    $scope.type = $data.type;
+                    $scope.email = $data.email;
+                    $scope.enquiryDate = $scope.getFormattedDate($data.enquiryDate);
+
+
+                }).error(function (data) {
+                    //todo: log this
+                });
+        }
+        $scope.editEnquiry();
+
+        $scope.updateEnquiry = function () {
+            $scope.enquiryDate = $('#enquiryDate').val();         //bad hack because of angular update issue
+
+
+            $http.post(
+                '/enquiry/update-enquiry',
+                {
+                    'enquiryId': $scope.id,
+                    'name': $scope.name,
+                    'mobile': $scope.mobile,
+                    'email': $scope.email,
+                    'date': $scope.enquiryDate,
+                    'program': $scope.course,
+                    'branch_id': $scope.branchId,
+                    'type': $scope.type
+                }
+            ).success(function (data) {
+                    window.location.href = "/#/enquiry/list/";
+                }).error(function (data) {
+                    console.log(data);
+                });
+        }
+
 
     }
     ]);

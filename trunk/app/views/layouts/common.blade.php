@@ -6,17 +6,10 @@
 
     <title>Wisdom Mart - Enquiry Tracker</title>
 
-<!--    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>-->
-<!--    <link href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.0/css/bootstrap-combined.no-icons.min.css"-->
-<!--          media="all" type="text/css" rel="stylesheet">-->
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
     <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.min.css" rel="stylesheet">
     <link href="<% URL::asset('css/datepicker.css'); %>" media="all" type="text/css" rel="stylesheet">
     <link href="<% URL::asset('css/application.css'); %>" media="all" type="text/css" rel="stylesheet">
-
-
-    <!--[if IE 7]>
-    <link href="http://smslite.localhost.com/css/font-awesome-ie7.min.css" media="all" type="text/css" rel="stylesheet">
-    <![endif]-->
 
     <!--Scripts-->
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>

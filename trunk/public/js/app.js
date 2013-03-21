@@ -39,6 +39,7 @@ angular.module('app', ['LoaderServices']).
             when('/user/login', {templateUrl: '/user/login', controller: 'User_Login'}).
             when('/', {templateUrl: '/enquiry/list', controller: 'Enquiry_List'}).
             when('/followup/list', {templateUrl: '/enquiry/followups', controller: 'Followup_List'}).
+            when('/enquiry/edit/:id', {templateUrl: '/enquiry/edit', controller: 'Enquiry_Edit_Controller'}).
             when('/enquiry/list', {
                 templateUrl: '/enquiry/list',
                 controller: 'Enquiry_List'

@@ -1,17 +1,17 @@
 <div class="row">
-    <div class="span2">
+    <div class="span3">
         <p>
             <label><strong>From Date</strong></label>
 
         <div class="input-append date date-input" data-date-format="dd M yyyy">
-            <input class="span1" type="text" id="fromDate" ng-model="fromDate">
+            <input class="span2" type="text" id="fromDate" ng-model="fromDate">
             <span class="add-on"><i class="icon-calendar"></i></span>
         </div>
 
         <label><strong>To Date</strong></label>
 
         <div class="input-append date date-input" data-date-format="dd M yyyy">
-            <input class="span1" type="text" id="toDate" ng-model="toDate">
+            <input class="span2" type="text" id="toDate" ng-model="toDate">
             <span class="add-on"><i class="icon-calendar"></i></span>
         </div>
         </p>
@@ -80,7 +80,6 @@
                 <td style="max-width: 100px;">{{ getStatusText(enquiry) }}</td>
                 <td>
                     <div ng-show="checkStatus(enquiry)" class="dropdown">
-
                         <a class="dropdown-toggle" id="dLabel" role="button" data-toggle="dropdown" data-target="#"
                            href="/page.html">
                             Edit
@@ -91,9 +90,10 @@
                             <li><a ng-click="showEnrollModal(enquiry)">Enrolled</a></li>
                             <li><a ng-click="showFollowupModal(enquiry)">Enroll Later</a></li>
                             <li><a ng-click="showNotInterestedModel(enquiry)">Not Interested</a></li>
+                            <li><a href="#/enquiry/edit/{{enquiry.id}}">Edit</a></li>
                         </ul>
                     </div>
-                    <span ng-show="checkStatus(enquiry)"></span>
+                    <span ng-hide="checkStatus(enquiry)"><a  href="#/enquiry/edit/{{enquiry.id}}">Edit</a></span>
                 </td>
             </tr>
 
@@ -114,11 +114,10 @@
         </table>
         <div>
             <button class="btn" ng-disabled="previousPage == 0" ng-click="updatePrevious()"><i
-                    class="icon-caret-left icon-large"></i> <<
+                    class="icon-arrow-left"></i>
             </button>
             <button class="btn" ng-disabled="enquiries.length ==0" ng-click="updateNext()"><i
-                    class="icon-caret-right icon-large"></i> >>
-            </button>
+                    class="icon-arrow-right"></i> </button>
         </div>
     </div>
 
@@ -233,10 +232,10 @@
             <label>Email-Id</label>
             <input type="email" ng-model="enquiry.email" ng-required="true" placeholder="Email-Id">
             <label>Type</label>
+
+
             <select ng-model="enquiry.type" ng-required="true">
-                <option value="Walk-in">Walk-in</option>
-                <option value="Telephonic">Telephonic</option>
-                <option value="Other">Other</option>
+                <option ng-repeat="type in types" value="{{type.name}}">{{type.name}}</option>
             </select>
             <label>Branch</label>
             <select ng-model="enquiry.branchId" ng-required="true">
