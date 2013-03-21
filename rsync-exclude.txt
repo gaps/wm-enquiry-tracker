@@ -1,0 +1,8 @@
+trunk/.idea/*
+trunk/.idea
+.idea/*
+.git/*
+.idea
+.git
+sync.sh
+rsync-exclude.txt
