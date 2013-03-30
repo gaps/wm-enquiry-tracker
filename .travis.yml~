@@ -1,0 +1,10 @@
+language: php
+
+php:
+  - 5.3
+
+before_script: 
+  - cd trunk
+  - php composer.phar install
+
+script: "phpunit"

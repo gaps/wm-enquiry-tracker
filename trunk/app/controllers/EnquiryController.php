@@ -262,7 +262,7 @@ class EnquiryController extends BaseController
 
     public function getEdit()
     {
-        return View::make('enquiry/edit')->with('branches',Auth::user()->branches()->get());
+        return View::make('enquiry/edit');
 
     }
 

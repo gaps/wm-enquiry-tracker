@@ -100,7 +100,7 @@ module.factory('UserService', ["$http", "$q", function ($http, $q) {
 module.factory('EnquiryService', ["$http", "$q", function ($http, $q) {
     return {
 
-        getEnquiries: function (fromDate, toDate, branchIds, status, types,pageNumber,pageCount) {
+        getEnquiries: function (fromDate, toDate, branchIds, status, types, pageNumber, pageCount) {
             var deferred = $q.defer();          //defer for data
 
             $http.post(
@@ -137,14 +137,14 @@ module.factory('EnquiryService', ["$http", "$q", function ($http, $q) {
                     name: enquiry.name,
                     program: enquiry.program,
                     email: enquiry.email,
-                    mobile:enquiry.mobile,
+                    mobile: enquiry.mobile,
                     type: enquiry.type,
                     branch_id: enquiry.branchId
 
                 }
             ).success(function (data) {
 
-                        deferred.resolve(data);
+                    deferred.resolve(data);
 
                 }).error(function (data) {
                     console.log('error', data);
@@ -157,14 +157,12 @@ module.factory('EnquiryService', ["$http", "$q", function ($http, $q) {
     }
 
 
-
-
 }]);
 
 module.factory('FollowupService', ["$http", "$q", function ($http, $q) {
     return {
 
-        getFollowups: function (fromDate, toDate, branchIds, types,pageNumber,pageCount) {
+        getFollowups: function (fromDate, toDate, branchIds, types, pageNumber, pageCount) {
             var deferred = $q.defer();          //defer for data
 
             $http.post(
@@ -189,6 +187,53 @@ module.factory('FollowupService', ["$http", "$q", function ($http, $q) {
                 });
 
             return deferred.promise;
+        }
+
+    }
+
+}]);
+
+module.factory('EditEnquiryService', ["$http", "$q", function ($http, $q) {
+    return {
+
+        getEnquiry: function (id) {
+            var deferred = $q.defer();          //defer for data
+
+            $http.post(
+                '/enquiry/get-enquiry',
+                {
+                    enquiryId: id
+                }
+            ).success(function (data) {
+                    deferred.resolve(data);
+                }).error(function (data) {
+                    console.log('error', data);
+                    deferred.reject(data);
+                });
+
+            return deferred.promise;
+        },
+        updateEnquiry: function (enquiry) {
+
+            $http.post(
+                '/enquiry/update-enquiry',
+                {
+                    'enquiryId': enquiry.id,
+                    'name': enquiry.name,
+                    'mobile': enquiry.mobile,
+                    'email': enquiry.email,
+                    'date': enquiry.enquiryDate,
+                    'program': enquiry.course,
+                    'branch_id': enquiry.branch_id,
+                    'type': enquiry.type
+                }
+            ).success(function (data) {
+                    window.location.href = "/#/enquiry/list/";
+                }).error(function (data) {
+                    console.log(data);
+                });
+
+
         }
 
     }

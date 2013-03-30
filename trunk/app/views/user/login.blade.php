@@ -14,6 +14,7 @@
                   class="text-error">Enter a valid email id. </span>
         </div>
         <div class="control-group">
+            <label for="password">Password</label>
             <input tabindex="2" type="password" ng-required="true" name="password" class="span4" id="password"
                    ng-model="user.password">
             <span ng-show="form.password.$error.required && !form.password.$pristine" class="text-error">Please enter a password</span>
