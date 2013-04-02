@@ -27,4 +27,16 @@ class HomeController extends BaseController
         return View::make('home');
     }
 
+
+    public function getTestData()
+    {
+       $data=Input::all();
+        var_dump($data);
+    }
+    public function postTestData()
+    {
+        $data=Input::all();
+        var_dump($data);
+    }
+
 }

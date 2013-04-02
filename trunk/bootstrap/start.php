@@ -25,7 +25,7 @@ $app = new Illuminate\Foundation\Application;
 */
 
 $env = $app->detectEnvironment(array(
-    'prod' => array('enquiry-tracker.wisdommart.in'),
+    'prod' => array('demo-enquiry.wisdommart.in'),
 	'local' => array('wm-enquiry.localhost.com','wmenquiry.localhost.com'),
 	'testing' =>array('naveen-lappy','keshav-pc')
 ));

@@ -139,8 +139,8 @@ module.factory('EnquiryService', ["$http", "$q", function ($http, $q) {
                     email: enquiry.email,
                     mobile: enquiry.mobile,
                     type: enquiry.type,
-                    branch_id: enquiry.branchId
-
+                    branch_id: enquiry.branchId,
+                    date:enquiry.enquiryDate
                 }
             ).success(function (data) {
 

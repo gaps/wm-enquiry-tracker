@@ -41,18 +41,22 @@ class Util
     public static function getCourses()
     {
 
-        return array(
-            "GMAT-Verbal",
-            "GMAT-Math",
-            "GRE-Verbal",
-            "GRE-Math",
-            "SAT Verbal",
-            "SAT-Math",
-            "IELTS",
-            "TOEFL",
-            "Speak Easy",
+        $programs=array(
+            "GMAT",
+            "GRE",
+            "SAT",
+            "MS Admissions",
+            "MBA admissions",
+            "UG Admissions",
+            "Phd Admissions",
+            "Visa",
+            "Admissions",
+            "Write Ups"
         );
+        sort($programs);
+        return $programs;
     }
+
 
     public static function  getTypes()
     {

@@ -49,7 +49,7 @@
 
     <div class="span9">
         <p>
-<!--            <a href="#myModal" role="button" class="btn" data-toggle="modal">Add Enquiry</a>-->
+            <!--            <a href="#myModal" role="button" class="btn" data-toggle="modal">Add Enquiry</a>-->
             <button class="btn" type="button" ng-click="showAddEnquiryModal()">Add Enquiry</button>
             <button class="btn" type="button" ng-click="exportData()">Export</button>
         </p>
@@ -93,7 +93,7 @@
                             <li><a href="#/enquiry/edit/{{enquiry.id}}">Edit</a></li>
                         </ul>
                     </div>
-                    <span ng-hide="checkStatus(enquiry)"><a  href="#/enquiry/edit/{{enquiry.id}}">Edit</a></span>
+                    <span ng-hide="checkStatus(enquiry)"><a href="#/enquiry/edit/{{enquiry.id}}">Edit</a></span>
                 </td>
             </tr>
 
@@ -117,7 +117,7 @@
                     class="icon-arrow-left"></i>
             </button>
             <button class="btn" ng-disabled="enquiries.length ==0" ng-click="updateNext()"><i
-                    class="icon-arrow-right"></i> </button>
+                    class="icon-arrow-right"></i></button>
         </div>
     </div>
 
@@ -201,12 +201,20 @@
         </p>
 
         <form name="form" id="addEnquiryForm" novalidate>
-           <div>
-            <label>Name</label>
-            <input type="text"  name="enquiryName" ng-required="true" ng-model="enquiry.name" placeholder="Name">
+            <div>
+                <label>Name</label>
+                <input type="text" name="enquiryName" ng-required="true" ng-model="enquiry.name" placeholder="Name">
  <span ng-show="form.enquiryName.$error.required && !form.enquiryName.$pristine "
        class="validation invalid"><i class="icon-remove padding-right-5"></i>Please enter your name</span>
-           </div>
+            </div>
+
+
+
+                <label for="enquiryDate">Date</label>
+                <input size="16" class="date datetime-input" type="text" id="enquiryDate"
+                       ng-model="enquiry.enquiryDate" value="" readonly>
+
+
             <div>
                 <label>Mobile</label>
                 <input type="text" id="inputMobile" name="mobile" ng-model="enquiry.mobile" ng-minLength="8"
@@ -247,7 +255,7 @@
     </div>
     <div class="modal-footer">
         <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
-        <button class="btn btn-primary" ng-disabled="form.$invalid"  ng-click="addEnquiry(enquiry)">Save</button>
+        <button class="btn btn-primary" ng-disabled="form.$invalid" ng-click="addEnquiry(enquiry)">Save</button>
     </div>
 </div>
 

@@ -10,6 +10,7 @@ angular.module('app')
         $scope.fromDate = dateFormat(new Date(), 'dd mmmm yyyy');
         $scope.enquiries = [];
         $scope.enquiry = {};
+
         $scope.pageNumber = 1;
         $scope.pageCount = 25;
         $scope.previousPage = 0;
@@ -65,7 +66,9 @@ angular.module('app')
         };
 
         $scope.addEnquiry = function (enquiry) {
+            $scope.enquiry.enquiryDate = $('#enquiryDate').val();
             $enquiryService.addEnquiries(enquiry).then(function (value) {
+
                 $('#myModal').modal('hide');
                 $scope.enquiry = {};
                 $scope.enquiries.unshift(value);
@@ -176,6 +179,7 @@ angular.module('app')
 
         $scope.showAddEnquiryModal = function () {
             $scope.enquiry = {};
+            $scope.enquiry.enquiryDate = dateFormat(new Date(), 'dd mmmm yyyy');
             $('#myModal').modal('show');
             $('#addEnquiryForm')[0].reset();
             $('#myModal span').hide();
@@ -687,7 +691,7 @@ angular.module('app')
             $scope.enquiry = data;
         });
 
-        $scope.updateEnquiry= function(enquiry){
+        $scope.updateEnquiry = function (enquiry) {
             $editEnquiryService.updateEnquiry(enquiry);
         }
 
@@ -715,8 +719,6 @@ angular.module('app')
 //                });
 //        }
 //        $scope.editEnquiry();
-
-
 
 
     }

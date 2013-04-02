@@ -75,6 +75,7 @@ class EnquiryController extends BaseController
         $date = isset($data->date) ? $data->date : date("Y-m-d");
         $program = isset($data->program) ? $data->program : "";
         $branch_id = $data->branch_id;
+        //TODO: to add enquiry
         $type = isset($data->type) ? $data->type : "";
         $newEnquiry = $this->enquiryRepo->createEnquiry($name, $mobile, $email, $date, $program, $type, Auth::user()->id, $branch_id);
         if (empty($newEnquiry))
