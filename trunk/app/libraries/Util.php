@@ -133,7 +133,7 @@ class Util
     {
         $path = base_path();
         $path = dirname(dirname($path));
-        return $path . '/public/' . ltrim($filePath, "/");
+        return $path . '/public_html/' . ltrim($filePath, "/");
     }
 
     public static function convertToHttpURL($filePath)

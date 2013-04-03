@@ -268,7 +268,8 @@ angular.module('app')
                     fromDate: $scope.fromDate,
                     branchIds: $scope.getSelectedBranches(),
                     status: $scope.getSelectedStatuses(),
-                    types: $scope.getSelectedTypes()
+                    types: $scope.getSelectedTypes(),
+                    name:$scope.name
 
                 }
             ).success(function ($data) {
@@ -515,7 +516,8 @@ angular.module('app')
                     toDate: $scope.toDate,
                     fromDate: $scope.fromDate,
                     branchIds: $scope.getSelectedBranches(),
-                    types: $scope.getSelectedTypes()
+                    types: $scope.getSelectedTypes(),
+                    name:$scope.name
                 }
             ).success(function ($data) {
                     if ($data.status != false) {
