@@ -19,9 +19,10 @@ class UserControllerTest extends TestCase
     }
 
 
-    public function testUserBranches(){
-        $branch=$this->getBranch();
-        $user=$this->getUser();
+    public function testUserBranches()
+    {
+        $branch = $this->getBranch();
+        $user = $this->getUser();
 
         $this->assertEquals(true, true);
     }
@@ -43,7 +44,7 @@ class UserControllerTest extends TestCase
 
         $data = array(
             'email' => "keshavashta@yahoo.co.in",
-            'password' =>"password"
+            'password' => "password"
         );
 
         //checking for status filter

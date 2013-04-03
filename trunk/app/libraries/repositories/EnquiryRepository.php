@@ -42,7 +42,7 @@ class EnquiryRepository
     }
 
 
-    public function getEnquiries($branchIds, $status, $types, $fromDate = null, $toDate = null, $skip = 0, $perPage = Constants::PAGECOUNT)
+    public function getEnquiries($branchIds, $status, $types, $fromDate = null, $toDate = null, $name, $skip = 0, $perPage = Constants::PAGECOUNT)
     {
         if (empty($status) || empty($types) || empty($branchIds) || $fromDate == null || $toDate == null)
             return array();
@@ -85,7 +85,8 @@ class EnquiryRepository
             whereIn('id', $filteredEnquiryIds)->
             whereIn('branch_id', $branchIds);
 
-
+        if (!empty($name))
+            $query->where('name', '=', $name);
         try {
             return $query->where('enquiryDate', '>=', $fromDate)->
                 where('enquiryDate', '<', $toDate)->whereIn('type', $types)->orderBy('enquiryDate', 'desc')->skip($skip)->take($perPage)->get();
@@ -95,7 +96,7 @@ class EnquiryRepository
         }
     }
 
-    public function getFollowUps(DateTime $fromDate, DateTime $toDate, $types, $branchIds, $skip = 0, $perPage = Constants::PAGECOUNT)
+    public function getFollowUps(DateTime $fromDate, DateTime $toDate, $types, $branchIds,$name, $skip = 0, $perPage = Constants::PAGECOUNT)
     {
 
         if (empty($types) || empty($branchIds) || $fromDate == null || $toDate == null)
@@ -153,7 +154,8 @@ class EnquiryRepository
         $query = Enquiry::with(array('branch', 'enquiryStatus'))
             ->whereIn('id', $enquiryIds)->whereIn('type', $types);
 
-
+        if (!empty($name))
+            $query->where('name', '=', $name);
         return $query->orderBy('enquiryDate', 'desc')->skip($skip)->take($perPage)->get();
     }
 

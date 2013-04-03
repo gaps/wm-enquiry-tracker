@@ -30,12 +30,13 @@ class HomeController extends BaseController
 
     public function getTestData()
     {
-       $data=Input::all();
+        $data = Input::all();
         var_dump($data);
     }
+
     public function postTestData()
     {
-        $data=Input::all();
+        $data = Input::all();
         var_dump($data);
     }
 

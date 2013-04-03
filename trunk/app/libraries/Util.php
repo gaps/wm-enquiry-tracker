@@ -41,7 +41,7 @@ class Util
     public static function getCourses()
     {
 
-        $programs=array(
+        $programs = array(
             "GMAT",
             "GRE",
             "SAT",
@@ -51,7 +51,10 @@ class Util
             "Phd Admissions",
             "Visa",
             "Admissions",
-            "Write Ups"
+            "Write Ups",
+            "IELTS",
+            "TOEFL",
+            "Speakeasy"
         );
         sort($programs);
         return $programs;

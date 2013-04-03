@@ -4,7 +4,7 @@
         <label><strong>From Date</strong></label>
         <div class="input-append date date-input" data-date-format="dd M yyyy">
             <input class="span2" type="text" id="fromDate" ng-model="fromDate">
-        <span class="add-on"><i class="icon-calendar"></i></span>
+            <span class="add-on"><i class="icon-calendar"></i></span>
         </div>
 
     <label><strong>To Date</strong></label>
@@ -13,6 +13,11 @@
             <span class="add-on"><i class="icon-calendar"></i></span>
         </div>
     </p>
+
+    <label><strong>Name</strong></label>
+
+        <input type="text" ng-model="name">
+
     <label><strong>Branches</strong></label>
         <div ng-repeat="branch in branches">
             <label class="checkbox">
@@ -91,7 +96,7 @@
 </table>
     <div>
         <button class="btn" ng-disabled="previousPage == 0" ng-click="updatePrevious()"><i
-                class="icon-arrow-left"></i>  </button>
+                class="icon-arrow-left"></i></button>
         <button class="btn" ng-disabled="followUps.length ==0" ng-click="updateNext()"><i
                 class="icon-arrow-right"></i></button>
     </div>

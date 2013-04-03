@@ -100,7 +100,7 @@ module.factory('UserService', ["$http", "$q", function ($http, $q) {
 module.factory('EnquiryService', ["$http", "$q", function ($http, $q) {
     return {
 
-        getEnquiries: function (fromDate, toDate, branchIds, status, types, pageNumber, pageCount) {
+        getEnquiries: function (fromDate, toDate, branchIds, status, types, name, pageNumber, pageCount) {
             var deferred = $q.defer();          //defer for data
 
             $http.post(
@@ -111,6 +111,7 @@ module.factory('EnquiryService', ["$http", "$q", function ($http, $q) {
                     branchIds: branchIds,
                     status: status,
                     types: types,
+                    name: name,
                     pageNumber: pageNumber,
                     pageCount: pageCount
                 }
@@ -140,7 +141,7 @@ module.factory('EnquiryService', ["$http", "$q", function ($http, $q) {
                     mobile: enquiry.mobile,
                     type: enquiry.type,
                     branch_id: enquiry.branchId,
-                    date:enquiry.enquiryDate
+                    date: enquiry.enquiryDate
                 }
             ).success(function (data) {
 
@@ -162,7 +163,7 @@ module.factory('EnquiryService', ["$http", "$q", function ($http, $q) {
 module.factory('FollowupService', ["$http", "$q", function ($http, $q) {
     return {
 
-        getFollowups: function (fromDate, toDate, branchIds, types, pageNumber, pageCount) {
+        getFollowups: function (fromDate, toDate, branchIds, types, name, pageNumber, pageCount) {
             var deferred = $q.defer();          //defer for data
 
             $http.post(
@@ -172,6 +173,7 @@ module.factory('FollowupService', ["$http", "$q", function ($http, $q) {
                     toDate: toDate,
                     branchIds: branchIds,
                     types: types,
+                    name: name,
                     pageNumber: pageNumber,
                     pageCount: pageCount
                 }

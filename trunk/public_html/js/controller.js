@@ -10,7 +10,7 @@ angular.module('app')
         $scope.fromDate = dateFormat(new Date(), 'dd mmmm yyyy');
         $scope.enquiries = [];
         $scope.enquiry = {};
-
+        $scope.name = "";
         $scope.pageNumber = 1;
         $scope.pageCount = 25;
         $scope.previousPage = 0;
@@ -81,7 +81,7 @@ angular.module('app')
             $scope.toDate = $('#toDate').val();
             $scope.fromDate = $('#fromDate').val();
 
-            $enquiryService.getEnquiries($scope.fromDate, $scope.toDate, $scope.getSelectedBranches(), $scope.getSelectedStatuses(), $scope.getSelectedTypes(), $scope.pageNumber, $scope.pageCount).then(function (value) {
+            $enquiryService.getEnquiries($scope.fromDate, $scope.toDate, $scope.getSelectedBranches(), $scope.getSelectedStatuses(), $scope.getSelectedTypes(), $scope.name, p$scope.pageNumber, $scope.pageCount).then(function (value) {
                 $scope.enquiries = value;
             });
         };
@@ -93,7 +93,7 @@ angular.module('app')
             $scope.toDate = $('#toDate').val();
             $scope.fromDate = $('#fromDate').val();
 
-            $enquiryService.getEnquiries($scope.fromDate, $scope.toDate, $scope.getSelectedBranches(), $scope.getSelectedStatuses(), $scope.getSelectedTypes(), $scope.pageNumber, $scope.pageCount).then(function (value) {
+            $enquiryService.getEnquiries($scope.fromDate, $scope.toDate, $scope.getSelectedBranches(), $scope.getSelectedStatuses(), $scope.getSelectedTypes(), $scope.name, $scope.pageNumber, $scope.pageCount).then(function (value) {
                 $scope.enquiries = value;
             });
         }
@@ -181,7 +181,8 @@ angular.module('app')
             $scope.enquiry = {};
             $scope.enquiry.enquiryDate = dateFormat(new Date(), 'dd mmmm yyyy');
             $('#myModal').modal('show');
-            $('#addEnquiryForm')[0].reset();
+
+
             $('#myModal span').hide();
         }
 
@@ -284,7 +285,7 @@ angular.module('app')
         }
         setTimeout(function () {
 
-            $enquiryService.getEnquiries($scope.fromDate, $scope.toDate, $scope.getSelectedBranches(), $scope.getSelectedStatuses(), $scope.getSelectedTypes(), $scope.pageNumber, $scope.pageCount).then(function (value) {
+            $enquiryService.getEnquiries($scope.fromDate, $scope.toDate, $scope.getSelectedBranches(), $scope.getSelectedStatuses(), $scope.getSelectedTypes(), $scope.name, $scope.pageNumber, $scope.pageCount).then(function (value) {
                 $scope.enquiries = value;
             });
         }, 300);
@@ -319,6 +320,7 @@ angular.module('app')
         $scope.toDate = dateFormat(new Date(), 'dd mmmm yyyy');
         $scope.fromDate = dateFormat(new Date(), 'dd mmmm yyyy');
         $scope.followUps = [];
+        $scope.name = "";
         $scope.pageNumber = 1;
         $scope.pageCount = 25;
         $scope.previousPage = 0;
@@ -480,13 +482,13 @@ angular.module('app')
             $scope.previousPage = 0;
             $scope.toDate = $('#toDate').val();
             $scope.fromDate = $('#fromDate').val();
-            $scope.followUps = $followupService.getFollowups($scope.fromDate, $scope.toDate, $scope.getSelectedBranches(), $scope.getSelectedTypes(), $scope.pageNumber, $scope.pageCount);
+            $scope.followUps = $followupService.getFollowups($scope.fromDate, $scope.toDate, $scope.getSelectedBranches(), $scope.getSelectedTypes(), $scope.name, $scope.pageNumber, $scope.pageCount);
         }
 
         $scope.getPageFollowups = function () {
             $scope.toDate = $('#toDate').val();
             $scope.fromDate = $('#fromDate').val();
-            $scope.followUps = $followupService.getFollowups($scope.fromDate, $scope.toDate, $scope.getSelectedBranches(), $scope.getSelectedTypes(), $scope.pageNumber, $scope.pageCount);
+            $scope.followUps = $followupService.getFollowups($scope.fromDate, $scope.toDate, $scope.getSelectedBranches(), $scope.getSelectedTypes(), $scope.name, $scope.pageNumber, $scope.pageCount);
         }
 
         $scope.updateNext = function () {
@@ -529,7 +531,7 @@ angular.module('app')
         }
 
         setTimeout(function () {
-            $scope.followUps = $followupService.getFollowups($scope.fromDate, $scope.toDate, $scope.getSelectedBranches(), $scope.getSelectedTypes(), $scope.pageNumber, $scope.pageCount);
+            $scope.followUps = $followupService.getFollowups($scope.fromDate, $scope.toDate, $scope.getSelectedBranches(), $scope.getSelectedTypes(), $scope.name, $scope.pageNumber, $scope.pageCount);
         }, 500);
 
     }

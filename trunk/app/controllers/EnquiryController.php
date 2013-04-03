@@ -98,11 +98,12 @@ class EnquiryController extends BaseController
         $status = isset($data->status) ? $data->status : array();
         $branchIds = isset($data->branchIds) ? $data->branchIds : array();
         $types = isset($data->types) ? $data->types : array();
+        $name = isset($data->name) ? $data->name : "";
         $pageCount = isset($data->pageCount) ? $data->pageCount : Constants::PAGECOUNT;
         $pageNumber = isset($data->pageNumber) ? $data->pageNumber : 1;
         $skip = $pageCount * ($pageNumber - 1);
         try {
-            $enquiries = $this->enquiryRepo->getEnquiries($branchIds, $status, $types, $fromDate, $toDate, $skip, $pageCount);
+            $enquiries = $this->enquiryRepo->getEnquiries($branchIds, $status, $types, $fromDate, $toDate, $name, $skip, $pageCount);
         } catch (PDOException $e) {
             Log::exception($e);
             return Response::make(Lang::get('error.bad'), Constants::DATABASE_ERROR_CODE);
@@ -133,11 +134,12 @@ class EnquiryController extends BaseController
         $toDate = !isset($data->toDate) || empty($data->toDate) ? new DateTime('now') : Util::getToDate(new DateTime($data->toDate));
         $branchIds = isset($data->branchIds) ? $data->branchIds : array();
         $types = isset($data->types) ? $data->types : array();
+        $name = isset($data->name) ? $data->name : "";
         $pageCount = isset($data->pageCount) ? $data->pageCount : Constants::PAGECOUNT;
         $pageNumber = isset($data->pageNumber) ? $data->pageNumber : 1;
         $skip = $pageCount * ($pageNumber - 1);
         try {
-            $enquiries = $this->enquiryRepo->getFollowUps($fromDate, $toDate, $types, $branchIds, $skip, $pageCount);
+            $enquiries = $this->enquiryRepo->getFollowUps($fromDate, $toDate, $types, $branchIds, $name, $skip, $pageCount);
         } catch (PDOException $e) {
             Log::exception($e);
             return Response::make(Lang::get('error.database'), Constants::DATABASE_ERROR_CODE);

@@ -83,7 +83,8 @@
 
     <div class="row">
         <div class="span4">
-            <button type="button" ng-disabled="form.$invalid" ng-click="updateEnquiry(enquiry)" class="btn btn-success">Update
+            <button type="button" ng-disabled="form.$invalid" ng-click="updateEnquiry(enquiry)" class="btn btn-success">
+                Update
             </button>
         </div>
     </div>

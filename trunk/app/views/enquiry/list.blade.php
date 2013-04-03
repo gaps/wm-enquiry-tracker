@@ -15,6 +15,11 @@
             <span class="add-on"><i class="icon-calendar"></i></span>
         </div>
         </p>
+
+        <label><strong>Name</strong></label>
+
+        <input type="text" ng-model="name">
+
         <label><strong>Branches</strong></label>
 
         <div ng-repeat="branch in branches">
@@ -32,6 +37,7 @@
                 <input type="checkbox" ng-model="type.selected"> {{ type.name }}
             </label>
         </div>
+
 
         <label><strong>Status</strong></label>
 
@@ -209,10 +215,9 @@
             </div>
 
 
-
-                <label for="enquiryDate">Date</label>
-                <input size="16" class="date datetime-input" type="text" id="enquiryDate"
-                       ng-model="enquiry.enquiryDate" value="" readonly>
+            <label for="enquiryDate">Date</label>
+            <input size="16" class="date datetime-input" type="text" id="enquiryDate"
+                   ng-model="enquiry.enquiryDate" value="" readonly>
 
 
             <div>
