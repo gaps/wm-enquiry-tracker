@@ -193,7 +193,7 @@ class EnquiryController extends BaseController
     public function postGetExportFollowups()
     {
         $data = (object)Input::json();
-
+ 
         if (empty($data)) {
             return Response::make(Lang::get('errors.bad'), Constants::BAD_REQUEST_CODE);
         }
