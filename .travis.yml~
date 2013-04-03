@@ -1,10 +1,9 @@
 language: php
 
 php:
-  - 5.4
+  - 5.3
 
 before_script: 
-  - psql -c 'create database wm_enquiry_test;' -U postgres
   - cd trunk
   - php composer.phar install
 
